@@ -1,4 +1,4 @@
-require "lanyon/version"
+require 'lanyon/version'
 
 module Lanyon
   # Your code goes here...
