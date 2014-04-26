@@ -10,4 +10,8 @@ class Lanyon::File < ::File
   def dirname
     File.dirname(@path)
   end
+
+  def file?
+    File.file?(@path)
+  end
 end
