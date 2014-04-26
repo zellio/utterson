@@ -7,7 +7,9 @@ describe Lanyon::File do
   end
 
   describe '#basename' do
-    it
+    it 'returns the basename of the file' do
+      expect(file.basename).to eql "foo.md"
+    end
   end
 
   describe '#dirname' do
