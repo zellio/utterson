@@ -16,12 +16,14 @@ describe Lanyon::File, fakefs: true do
   describe '#basename' do
     it 'returns the basename of the file' do
       expect(file.basename).to eql 'foo.md'
+      expect(dir.basename).to eql 'foo'
     end
   end
 
   describe '#dirname' do
     it 'returns the directory which contains the file' do
       expect(file.dirname).to eql 'path/to'
+      expect(dir.dirname).to eql 'path/to'
     end
   end
 
