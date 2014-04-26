@@ -22,7 +22,7 @@ describe Lanyon::File do
   end
 
   describe '#file?' do
-    it 'returns true if @path points to a file' do
+    it 'returns true the file is a file' do
       expect(file.file?).to be_true
       expect(dir.file?).to be_false
     end
