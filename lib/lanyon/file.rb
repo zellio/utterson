@@ -6,4 +6,8 @@ class Lanyon::File < ::File
   def basename
     File.basename(@path)
   end
+
+  def dirname
+    File.dirname(@path)
+  end
 end
