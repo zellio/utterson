@@ -15,7 +15,9 @@ describe Lanyon::File do
   end
 
   describe '#dirname' do
-    it
+    it 'returns the directory which contains the file' do
+      expect(file.dirname).to eql 'path/to'
+    end
   end
 
   describe '#file?' do
