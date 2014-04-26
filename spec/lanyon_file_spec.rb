@@ -2,9 +2,12 @@ require 'spec_helper'
 
 describe Lanyon::File, fakefs: true do
 
-  before (:all) do
-    FileUtils.mkdir_p('path/to/foo')
-    FileUtils.touch('path/to/foo.md')
+  before (:each) do
+    Dir.mkdir('path')
+    Dir.mkdir('path/to')
+    Dir.mkdir('path/to/foo')
+
+    File.write('path/to/foo.md', 'w')
   end
 
   let (:file) { Lanyon::File.new path: 'path/to/foo.md' }
