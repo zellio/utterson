@@ -1,12 +1,17 @@
 require 'spec_helper'
 
-describe Lanyon::File do
+describe Lanyon::File, fakefs: true do
+
+  before (:all) do
+    FileUtils.mkdir_p('path/to/foo')
+    FileUtils.touch('path/to/foo.md')
+  end
 
   let (:file) { Lanyon::File.new path: 'path/to/foo.md' }
   let (:dir)  { Lanyon::File.new path: 'path/to/foo/' }
 
   it 'subclasses ::File' do
-    expect(Lanyon::File.ancestors.include? File).to be_true
+    expect(Lanyon::File.ancestors.include? RealFile).to be_true
   end
 
   describe '#basename' do
