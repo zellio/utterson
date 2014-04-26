@@ -14,4 +14,8 @@ class Lanyon::File < ::File
   def file?
     File.file?(@path)
   end
+
+  def directory?
+    File.directory?(@path)
+  end
 end

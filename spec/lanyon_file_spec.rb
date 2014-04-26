@@ -38,8 +38,8 @@ describe Lanyon::File, fakefs: true do
 
   describe '#directory?' do
     it 'returns true if the file is a directory' do
-      expect(file.file?).to be_false
-      expect(dir.file?).to be_true
+      expect(file.directory?).to be_false
+      expect(dir.directory?).to be_true
     end
   end
 
