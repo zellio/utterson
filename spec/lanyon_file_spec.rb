@@ -19,7 +19,7 @@ describe Lanyon::File, fakefs: true do
 
   describe '#basename' do
     it 'returns the basename of the file' do
-      expect(file.basename).to eql "foo.md"
+      expect(file.basename).to eql 'foo.md'
     end
   end
 

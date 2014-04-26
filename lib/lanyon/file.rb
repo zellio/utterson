@@ -1,5 +1,5 @@
 class Lanyon::File < ::File
-  def initialize(opts={})
+  def initialize(opts = {})
     @path = opts[:path]
   end
 
