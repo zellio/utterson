@@ -10,8 +10,16 @@ describe Lanyon::File, fakefs: true do
     File.write('path/to/foo.md', 'w')
   end
 
-  let (:file) { Lanyon::File.new path: 'path/to/foo.md' }
-  let (:dir)  { Lanyon::File.new path: 'path/to/foo/' }
+  let (:file) { Lanyon::File.new('path/to/foo.md') }
+  let (:dir)  { Lanyon::File.new('path/to/foo/') }
+  let (:absf) { Lanyon::File.new('/abs/path') }
+
+  describe '#path' do
+    it 'prepends "./" to relative paths' do
+      expect(file.path).to eql './path/to/foo.md'
+      expect(absf.path).to eql '/abs/path'
+    end
+  end
 
   describe '#basename' do
     it 'returns the basename of the file' do
@@ -22,8 +30,8 @@ describe Lanyon::File, fakefs: true do
 
   describe '#dirname' do
     it 'returns the directory which contains the file' do
-      expect(file.dirname).to eql 'path/to'
-      expect(dir.dirname).to eql 'path/to'
+      expect(file.dirname).to eql './path/to'
+      expect(dir.dirname).to eql './path/to'
     end
   end
 

@@ -1,6 +1,10 @@
+require 'pathname'
+
 class Lanyon::File
-  def initialize(opts = {})
-    @path = opts[:path]
+  attr_accessor :path
+
+  def initialize(path)
+    @path = Pathname.new(path).absolute? ? path : File.join('.', path)
   end
 
   def basename
