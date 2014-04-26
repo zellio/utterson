@@ -13,10 +13,6 @@ describe Lanyon::File, fakefs: true do
   let (:file) { Lanyon::File.new path: 'path/to/foo.md' }
   let (:dir)  { Lanyon::File.new path: 'path/to/foo/' }
 
-  it 'subclasses ::File' do
-    expect(Lanyon::File.ancestors.include? RealFile).to be_true
-  end
-
   describe '#basename' do
     it 'returns the basename of the file' do
       expect(file.basename).to eql 'foo.md'
