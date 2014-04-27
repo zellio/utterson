@@ -28,4 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 2.14'
   spec.add_development_dependency 'simplecov', '~> 0.8'
   spec.add_development_dependency 'fakefs', '~> 0.5'
+
+  spec.add_dependency 'sinatra', '~> 1.4'
 end
