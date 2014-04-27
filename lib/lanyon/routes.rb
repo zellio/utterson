@@ -1,0 +1,2 @@
+module Lanyon::Routes
+end
