@@ -8,4 +8,6 @@ class Lanyon::Application < Sinatra::Base
 
   register Sinatra::ConfigFile
   config_file 'config.yml'
+
+  register Lanyon::Routes
 end
