@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'fakefs', '~> 0.5'
 
   spec.add_dependency 'sinatra', '~> 1.4'
+  spec.add_dependency 'sinatra-contrib', '~> 1.4'
 end
