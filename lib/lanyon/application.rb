@@ -9,11 +9,11 @@ class Lanyon::Application < Sinatra::Base
   set :views, -> { File.join(root, 'templates') }
   set :public_folder, -> { File.join(root, 'assets') }
 
-  Liquid::Template.file_system = Liquid::LocalFileSystem.new(views)
-  set :liquid, layout: :base
-
   register Sinatra::ConfigFile
   config_file 'config.yml'
+
+  Liquid::Template.file_system = Liquid::LocalFileSystem.new(views)
+  set :liquid, layout: :base
 
   Sass::Plugin.options.merge!(
     style: :expanded,
