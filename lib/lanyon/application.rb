@@ -5,12 +5,13 @@ require 'sass/plugin/rack'
 require 'rack/coffee'
 
 class Lanyon::Application < Sinatra::Base
+  set :project_root, -> { File.join(__dir__, "..", "..") }
   set :root, -> { __dir__ }
   set :views, -> { File.join(root, 'templates') }
   set :public_folder, -> { File.join(root, 'assets') }
 
   register Sinatra::ConfigFile
-  config_file 'config.yml'
+  config_file ['config.yml', File.join(project_root, "config.yml")]
 
   Liquid::Template.file_system = Liquid::LocalFileSystem.new(views)
   set :liquid, layout: :base
