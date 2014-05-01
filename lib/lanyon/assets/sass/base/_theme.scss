@@ -7,3 +7,12 @@ $dark-gray: #526066;
     background-color: $light-gray;
     border-color: $gray;
 }
+
+.icon.btn {
+    color: $light-gray;
+}
+
+.icon.btn.active, .icon.btn:hover {
+    background-color: $dark-gray;
+    color: $light-gray;
+}
