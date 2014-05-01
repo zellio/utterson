@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'sinatra/config_file'
 require 'liquid'
 require 'sass/plugin/rack'
+require 'rack/coffee'
 
 class Lanyon::Application < Sinatra::Base
   set :root, -> { __dir__ }
@@ -21,6 +22,8 @@ class Lanyon::Application < Sinatra::Base
     }
   )
   use Sass::Plugin::Rack
+
+  use Rack::Coffee, root: public_folder, urls: '/js'
 
   register Lanyon::Routes
 end
