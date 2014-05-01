@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/config_file'
 require 'liquid'
+require 'sass/plugin/rack'
 
 class Lanyon::Application < Sinatra::Base
   set :root, -> { __dir__ }
@@ -12,6 +13,14 @@ class Lanyon::Application < Sinatra::Base
 
   register Sinatra::ConfigFile
   config_file 'config.yml'
+
+  Sass::Plugin.options.merge!(
+    style: :expanded,
+    template_location: {
+      File.join(public_folder, "sass") => File.join(public_folder, "css")
+    }
+  )
+  use Sass::Plugin::Rack
 
   register Lanyon::Routes
 end
