@@ -34,4 +34,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'liquid', '~> 2.6'
   spec.add_dependency 'sass', '~> 3.3'
   spec.add_dependency 'rack-coffee', '~> 1.0'
+  spec.add_dependency 'rugged', '~> 0.19'
 end
