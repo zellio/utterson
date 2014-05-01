@@ -3,6 +3,7 @@ require 'sinatra/config_file'
 require 'liquid'
 require 'sass/plugin/rack'
 require 'rack/coffee'
+require 'sinatra/respond_with'
 
 class Lanyon::Application < Sinatra::Base
   set :project_root, -> { File.join(__dir__, "..", "..") }
@@ -25,6 +26,8 @@ class Lanyon::Application < Sinatra::Base
   use Sass::Plugin::Rack
 
   use Rack::Coffee, root: public_folder, urls: '/js'
+
+  register Sinatra::RespondWith
 
   register Lanyon::Routes
 end
