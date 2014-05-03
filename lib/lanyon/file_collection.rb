@@ -4,11 +4,11 @@ class Lanyon::FileCollection < ::Array
   end
 
   def files_in(path)
-    select {|f| f.dirname == path }
+    select { |f| f.dirname == path }
   end
 
   def directories_in(path)
-    map {|f| f.dirname[%r{(#{path}/[^/]+)}, 1] }.compact.uniq
+    map { |f| f.dirname[%r{(#{path}/[^/]+)}, 1] }.compact.uniq
   end
 
   def ls(path)
@@ -16,6 +16,6 @@ class Lanyon::FileCollection < ::Array
   end
 
   def ls_r(path)
-    select {|f| f.dirname.index(path) == 0 }
+    select { |f| f.dirname.index(path) == 0 }
   end
 end

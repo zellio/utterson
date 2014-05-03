@@ -1,7 +1,6 @@
 require 'pathname'
 
 class Lanyon::File
-
   attr_accessor :path
   attr_reader :oid
 
@@ -31,7 +30,7 @@ class Lanyon::File
   end
 
   def contents=(content)
-    File.open(@path, 'w') {|f| f.write(content) }
+    File.open(@path, 'w') { |f| f.write(content) }
     @contentes = content
   end
 end
