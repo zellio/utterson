@@ -6,12 +6,4 @@ class Lanyon::FileCollection < ::Array
   def in(path)
     []
   end
-
-  def read(oid)
-    @file = find { |x| x.oid == oid }
-    unless @file.nil?
-      @file.contents = File.read(@file.path) unless @file.contents
-      @file
-    end
-  end
 end
