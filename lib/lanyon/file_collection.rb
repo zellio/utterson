@@ -18,4 +18,8 @@ class Lanyon::FileCollection < ::Array
   def ls_r(path)
     select { |f| f.dirname.index(path) == 0 }
   end
+
+  def get(oid)
+    find {|f| f.oid == oid}
+  end
 end
