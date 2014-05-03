@@ -33,4 +33,12 @@ class Lanyon::File
     File.open(@path, 'w') { |f| f.write(content) }
     @contentes = content
   end
+
+  def to_json(state)
+    { oid: @oid,
+      path: @path,
+      basename: basename,
+      dirname: dirname,
+      contents: contents }.to_json
+  end
 end
