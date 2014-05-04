@@ -6,7 +6,7 @@ module Lanyon::Route::Files
     fc = Lanyon::FileCollection.new(repo.index)
 
     # CREATE
-    app.post '/files' do
+    app.post '/files/?' do
     end
 
     # READ
@@ -20,11 +20,11 @@ module Lanyon::Route::Files
     end
 
     # UPDATE
-    app.put '/files' do
+    app.put '/files/?' do
     end
 
     # DELETE
-    app.delete '/files' do
+    app.delete '/files/?' do
     end
   end
 end
