@@ -3,6 +3,7 @@ require 'sinatra/config_file'
 require 'liquid'
 require 'sass/plugin/rack'
 require 'rack/coffee'
+require 'rack/parser'
 require 'sinatra/respond_with'
 
 class Lanyon::Application < Sinatra::Base
@@ -26,6 +27,10 @@ class Lanyon::Application < Sinatra::Base
   use Sass::Plugin::Rack
 
   use Rack::Coffee, root: public_folder, urls: '/js'
+
+  use Rack::Parser, :parsers => {
+    'application/json' => proc { |d| JSON.parse(d, :symbolize_names => true) },
+  }
 
   register Sinatra::RespondWith
 
