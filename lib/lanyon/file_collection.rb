@@ -20,6 +20,6 @@ class Lanyon::FileCollection < ::Array
   end
 
   def get(oid)
-    find {|f| f.oid == oid}
+    find { |f| f.oid == oid }
   end
 end
