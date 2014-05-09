@@ -1,28 +1,23 @@
-require 'rugged'
-
 module Lanyon::Route::Files
   def self.registered(app)
-    repo = Rugged::Repository.new(app.repo_dir)
-    fc = Lanyon::FileCollection.new(repo.index)
-
-    author = {
-      email: 'lanyon@localhost.localhost',
-      name: 'Dr. Lanyon',
-      time: Time.now
-    }
+    rm = Lanyon::RepositoryManager.new(app.repo_dir)
 
     # CREATE
     app.post '/files/?' do
     end
 
     # READ
+    app.get '/files', provides: [:json] do
+       respond_with :files, files: rm.files
+    end
+
     app.get '/files/*/?:id?', provides: [:html, :json] do
-      respond_with :editor, file: fc.get(params[:id]) unless params[:id].nil?
+      respond_with :editor, file: rm.file(params[:id]) unless params[:id].nil?
 
       path = params[:splat].first
       path = path.empty? ? '.' : File.join('.', path)
 
-      respond_with :files, files: fc.ls(path)
+      respond_with :files, files: rm.files.ls(path)
     end
 
     # UPDATE
@@ -33,7 +28,7 @@ module Lanyon::Route::Files
       dirname = request.params[:dirname]
       contents = request.params[:contents]
 
-      file = fc.get(oid)
+      file = rm.file(oid)
 
       halt 501 if oid.nil? || file.nil?
 
@@ -47,29 +42,19 @@ module Lanyon::Route::Files
                end
       end
 
-      if file.path != path
-        # move the file
-      end
-
-      if file.contents != contents
-        tree = repo.index.write_tree
-
-        file.contents = contents
-        repo.index.add(file.path)
-
-        Rugged::Commit.create(repo, {
-          tree: tree,
-          author: author,
-          committer: author,
-          message: "Dr. Lanyon is updating <#{file.path}> with new content",
-          parents: repo.empty? ? [] : [repo.head.target].compact,
-          update_ref: 'HEAD'
-        })
-      end
+      rm.move(file, path) if file.path != path
+      rm.update(file, contents) if file.contents != contents
     end
 
     # DELETE
     app.delete '/files/?' do
+      oid = request.params[:oid]
+
+      file = rm.file(oid)
+
+      halt 501 if oid.nil? || file.nil?
+
+      rm.delete(file)
     end
   end
 end
