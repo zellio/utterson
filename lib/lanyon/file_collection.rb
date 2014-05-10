@@ -1,6 +1,8 @@
 class Lanyon::FileCollection < ::Array
-  def initialize(index)
-    super index.map { |data| Lanyon::File.new(data[:path], data[:oid]) }
+  def initialize(repository)
+    super(repository.index.map do |data|
+            Lanyon::File.new(repository.workdir, data[:path], data[:oid])
+          end)
   end
 
   def files_in(path)
