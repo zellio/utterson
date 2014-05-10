@@ -35,13 +35,15 @@ class Lanyon::RepositoryManager
                           message: "#{@name} is #{message}",
                           parents: commit_parents,
                           update_ref: 'HEAD')
+
+    @file_collection = nil
   end
 
   def add(path, content)
     oid = @repo.write(content, :blob)
 
     file = Lanyon::File.new(@repo.workdir, path, oid, content)
-    file.write
+    file.write unless File.exists?(file.full_path)
 
     @repo.index.add(path: file.path, oid: file.oid, mode: 0100644)
 

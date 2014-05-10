@@ -38,7 +38,7 @@ class Lanyon::File
   end
 
   def write
-    File.open(full_path, 'w') { |f| f.write(content) } if file?
+    File.write(full_path, @content)
   end
 
   def move(path)
@@ -49,6 +49,6 @@ class Lanyon::File
   def to_json(_state)
     { oid: @oid,
       path: @path,
-      content: content }.to_json
+      content: @content }.to_json
   end
 end
