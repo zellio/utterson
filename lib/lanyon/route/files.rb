@@ -6,6 +6,8 @@ module Lanyon::Route::Files
     app.post '/files/?' do
       path = request.params[:path]
       content = request.params[:content]
+
+      repo_manager.add(path, content)
     end
 
     # READ

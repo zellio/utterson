@@ -37,8 +37,15 @@ class Lanyon::RepositoryManager
                           update_ref: 'HEAD')
   end
 
-  def add(file)
-    commit("creating a new file at <#{file.path}>")
+  def add(path, content)
+    oid = @repo.write(content, :blob)
+
+    file = Lanyon::File.new(@repo.workdir, path, oid, content)
+    file.write
+
+    @repo.index.add(path: file.path, oid: file.oid, mode: 0100644)
+
+    commit("creating new file: #{file.path}")
   end
 
   def update(file, content)
