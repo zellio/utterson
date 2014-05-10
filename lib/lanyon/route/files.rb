@@ -45,8 +45,8 @@ module Lanyon::Route::Files
                end
       end
 
-      rm.move(file, path) if file.path != path
-      rm.update(file, content) if file.content != content
+      rm.move(file, path) if path && path != file.path
+      rm.update(file, content) if content && content != file.content
     end
 
     # DELETE
