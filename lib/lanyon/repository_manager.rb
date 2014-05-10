@@ -1,4 +1,3 @@
-require 'pathname'
 require 'rugged'
 
 class Lanyon::RepositoryManager

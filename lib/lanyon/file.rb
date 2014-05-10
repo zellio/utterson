@@ -1,5 +1,3 @@
-require 'pathname'
-
 class Lanyon::File
   attr_accessor :path, :content
   attr_reader :oid
