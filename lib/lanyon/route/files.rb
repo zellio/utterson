@@ -4,6 +4,9 @@ module Lanyon::Route::Files
 
     # CREATE
     app.post '/files/?' do
+      path = request.params[:path]
+      content = request.params[:content]
+
     end
 
     # READ
@@ -26,7 +29,7 @@ module Lanyon::Route::Files
       path = request.params[:path]
       basename = request.params[:basename]
       dirname = request.params[:dirname]
-      contents = request.params[:contents]
+      content = request.params[:content]
 
       file = rm.file(oid)
 
@@ -43,7 +46,7 @@ module Lanyon::Route::Files
       end
 
       rm.move(file, path) if file.path != path
-      rm.update(file, contents) if file.contents != contents
+      rm.update(file, content) if file.content != content
     end
 
     # DELETE
