@@ -17,7 +17,7 @@ class Lanyon::RepositoryManager
   end
 
   def files
-    @file_collection ||= Lanyon::FileCollection.new(repo.index)
+    @file_collection ||= Lanyon::FileCollection.new(repo)
   end
 
   def file(oid)
@@ -32,7 +32,7 @@ class Lanyon::RepositoryManager
       tree: tree_oid,
       author: author,
       committer: author,
-      message: "#{name} is #{message}",
+      message: "#{@name} is #{message}",
       parents: @repo.empty? ? [] : [@repo.head.target].compact,
       update_ref: 'HEAD'
     })
@@ -42,16 +42,20 @@ class Lanyon::RepositoryManager
     commit("creating a new file at <#{file.path}>")
   end
 
-  def update(file, contents)
-    file.contents = contents
-    @repo.index.update(file.git_path)
+  def update(file, content)
+    file.content = content
+    file.write
+
+    @repo.index.update(file.path)
 
     commit("updating <#{file.path}> with new content")
   end
 
   def move(file, path)
-    @repo.index.remove(file.path)
-    old_path, file.path = file.path, path
+    old_path = file.path
+    file.move(path)
+
+    @repo.index.remove(old_path)
     @repo.index.add(file.path)
 
     commit("moving <#{old_path}> to <#{file.path}>")
@@ -59,7 +63,7 @@ class Lanyon::RepositoryManager
 
   def delete(file)
     file.delete
-    @repo.index.remove(file.git_path)
+    @repo.index.remove(file.path)
 
     commit("deleting <#{file.path}>")
   end
