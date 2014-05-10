@@ -29,7 +29,7 @@ class Lanyon::Application < Sinatra::Base
   use Rack::Coffee, root: public_folder, urls: '/js'
 
   use Rack::Parser, parsers: {
-    'application/json' => proc { |d| JSON.parse(d, symbolize_names: true) },
+    'application/json' => proc { |d| JSON.parse(d, symbolize_names: true) }
   }
 
   register Sinatra::RespondWith

@@ -8,8 +8,8 @@ module Lanyon
 
     def self.registered(app)
       Route.constants.each do |const|
-        _module = Lanyon::Route.const_get const
-        app.register(_module) if _module.class == Module
+        nodule = Lanyon::Route.const_get const
+        app.register(nodule) if nodule.class == Module
       end
     end
   end

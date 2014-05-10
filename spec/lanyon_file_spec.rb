@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Lanyon::File, fakefs: true do
 
-  before (:each) do
+  before(:each) do
     Dir.mkdir('path')
     Dir.mkdir('path/to')
     Dir.mkdir('path/to/foo')
@@ -10,9 +10,9 @@ describe Lanyon::File, fakefs: true do
     File.write('path/to/foo.md', 'w')
   end
 
-  let (:file) { Lanyon::File.new('path/to/foo.md') }
-  let (:dir)  { Lanyon::File.new('path/to/foo/') }
-  let (:absf) { Lanyon::File.new('/abs/path') }
+  let(:file) { Lanyon::File.new('path/to/foo.md') }
+  let(:absf) { Lanyon::File.new('/abs/path') }
+  let(:dir) { Lanyon::File.new('path/to/foo/') }
 
   describe '#path' do
     it 'prepends "./" to relative paths' do

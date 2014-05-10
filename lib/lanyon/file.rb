@@ -48,7 +48,7 @@ class Lanyon::File
     @path = path
   end
 
-  def to_json(state)
+  def to_json(_state)
     { oid: @oid,
       path: @path,
       content: content }.to_json

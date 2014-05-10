@@ -2,7 +2,6 @@ require 'pathname'
 require 'rugged'
 
 class Lanyon::RepositoryManager
-
   attr_reader :repo
 
   def initialize(path, email = 'lanyon@localhost', name = 'Dr. Lanyon')
@@ -28,14 +27,15 @@ class Lanyon::RepositoryManager
     tree_oid = @repo.index.write_tree
     @repo.index.write
 
-    Rugged::Commit.create(@repo, {
-      tree: tree_oid,
-      author: author,
-      committer: author,
-      message: "#{@name} is #{message}",
-      parents: @repo.empty? ? [] : [@repo.head.target].compact,
-      update_ref: 'HEAD'
-    })
+    commit_parents = @repo.empty? ? [] : [@repo.head.target].compact
+
+    Rugged::Commit.create(@repo,
+                          tree: tree_oid,
+                          author: author,
+                          committer: author,
+                          message: "#{@name} is #{message}",
+                          parents: commit_parents,
+                          update_ref: 'HEAD')
   end
 
   def add(file)

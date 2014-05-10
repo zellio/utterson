@@ -1,63 +1,51 @@
 module Lanyon::Route::Files
   def self.registered(app)
-    rm = Lanyon::RepositoryManager.new(app.repo_dir)
+    repo_manager = Lanyon::RepositoryManager.new(app.repo_dir)
 
     # CREATE
     app.post '/files/?' do
       path = request.params[:path]
       content = request.params[:content]
-
     end
 
     # READ
     app.get '/files', provides: [:json] do
-       respond_with :files, files: rm.files
+      respond_with :files, files: repo_manager.files
     end
 
-    app.get '/files/*/?:id?', provides: [:html, :json] do
-      respond_with :editor, file: rm.file(params[:id]) unless params[:id].nil?
+    app.get '/files/:oid', provides: [:html, :json]  do
+      respond_with :editor, file: repo_manager.file(params[:oid])
+    end
 
+    app.get '/files/*/?', provides: [:html, :json]  do
       path = params[:splat].first
       path = path.empty? ? '.' : File.join('.', path)
-
-      respond_with :files, files: rm.files.ls(path)
+      respond_with :files, files: repo_manager.files.ls(path)
     end
 
     # UPDATE
     app.put '/files/?' do
       oid = request.params[:oid]
       path = request.params[:path]
-      basename = request.params[:basename]
-      dirname = request.params[:dirname]
       content = request.params[:content]
 
-      file = rm.file(oid)
+      file = repo_manager.file(oid)
 
-      halt 501 if oid.nil? || file.nil?
+      halt 501 if file.nil?
 
-      if path.nil?
-        path = if dirname && basename
-                 File.join(dirname, basename)
-               elsif dirname && basename.nil?
-                 File.join(dirname, file.basename)
-               elsif dirname.nil? && basename
-                 File.join(file.dirname, basename)
-               end
-      end
-
-      rm.move(file, path) if path && path != file.path
-      rm.update(file, content) if content && content != file.content
+      repo_manager.move(file, path) if path && path != file.path
+      repo_manager.update(file, content) if content && content != file.content
     end
 
     # DELETE
     app.delete '/files/?' do
       oid = request.params[:oid]
 
-      file = rm.file(oid)
+      file = repo_manager.file(oid)
 
-      halt 501 if oid.nil? || file.nil?
+      halt 501 if file.nil?
 
-      rm.delete(file)
+      repo_manager.delete(file)
     end
   end
 end
