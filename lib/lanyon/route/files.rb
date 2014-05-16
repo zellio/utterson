@@ -21,7 +21,6 @@ module Lanyon::Route::Files
 
     app.get '/files/*/?', provides: [:html, :json]  do
       path = params[:splat].first
-      path = path.empty? ? '.' : File.join('.', path)
       respond_with :files, files: repo_manager.files.ls(path)
     end
 
