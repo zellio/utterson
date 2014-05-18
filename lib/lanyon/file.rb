@@ -21,20 +21,12 @@ class Lanyon::File
     File.dirname(@path)
   end
 
-  def file?
-    File.file?(system_path)
-  end
-
-  def directory?
-    File.directory?(system_path)
-  end
-
   def exists?
     File.exists?(system_path)
   end
 
   def read
-    File.read(system_path) if file?
+    File.read(system_path) if exists?
   end
 
   def write
@@ -46,9 +38,13 @@ class Lanyon::File
     @path = path
   end
 
-  def to_json(_state)
+  def to_h
     { oid: @oid,
       path: @path,
-      content: @content }.to_json
+      content: @content }
+  end
+
+  def to_json(*)
+    to_h.to_json
   end
 end

@@ -3,54 +3,89 @@ require 'spec_helper'
 describe Lanyon::File, fakefs: true do
 
   before(:each) do
-    Dir.mkdir('path')
-    Dir.mkdir('path/to')
-    Dir.mkdir('path/to/foo')
+    Dir.mkdir('/root')
+    Dir.mkdir('/root/path')
 
-    File.write('path/to/foo.md', 'w')
+    File.write('/root/path/foo.md', 'Hello world!')
   end
 
-  let(:file) { Lanyon::File.new('path/to/foo.md') }
-  let(:absf) { Lanyon::File.new('/abs/path') }
-  let(:dir) { Lanyon::File.new('path/to/foo/') }
+  let(:file) { Lanyon::File.new('/root', 'path/foo.md', 'oid') }
 
-  describe '#path' do
-    it 'prepends "./" to relative paths' do
-      expect(file.path).to eql './path/to/foo.md'
-      expect(absf.path).to eql '/abs/path'
+  describe '#initialize' do
+    it 'reads file content from disk if not provided' do
+      expect(file.content).to eql 'Hello world!'
+    end
+  end
+
+  describe '#system_path' do
+    it 'is the full path of the file on disk' do
+      expect(file.system_path).to eql '/root/path/foo.md'
     end
   end
 
   describe '#basename' do
-    it 'returns the basename of the file' do
+    it 'is the filename of the file' do
       expect(file.basename).to eql 'foo.md'
-      expect(dir.basename).to eql 'foo'
     end
   end
 
   describe '#dirname' do
-    it 'returns the directory which contains the file' do
-      expect(file.dirname).to eql './path/to'
-      expect(dir.dirname).to eql './path/to'
+    it 'is the relative path of the file' do
+      expect(file.dirname).to eql 'path'
     end
   end
 
-  describe '#file?' do
-    it 'returns true the file is a file' do
-      expect(file.file?).to be_true
-      expect(dir.file?).to be_false
+  describe '#exists?' do
+    it 'is a wrapper around File.exists?' do
     end
   end
 
-  describe '#directory?' do
-    it 'returns true if the file is a directory' do
-      expect(file.directory?).to be_false
-      expect(dir.directory?).to be_true
+  describe '#read' do
+    it 'reads the file content off disk' do
+      expect(file.read).to eql 'Hello world!'
+    end
+
+    it 'does nothing if the file isn\'t there' do
+      file.path = 'bad/path'
+      expect(file.read).to be_nil
+    end
+  end
+
+  describe '#write' do
+    it 'writes file contents to #system_path' do
+      file.content = 'Hello Worlds!'
+      file.write
+      expect(::File.read('/root/path/foo.md')).to eql 'Hello Worlds!'
+    end
+  end
+
+  describe '#move' do
+
+  end
+
+  describe '#to_h' do
+    let(:hash) { file.to_h }
+
+    it 'is a hash of the relevant public values' do
+      expect(hash).to be_a(::Hash)
+    end
+
+    it 'provides the oid value' do
+      expect(hash[:oid]).to eql 'oid'
+    end
+
+    it 'provides the path value' do
+      expect(hash[:path]).to eql 'path/foo.md'
+    end
+
+    it 'provides the content value' do
+      expect(hash[:content]).to eql 'Hello world!'
     end
   end
 
   describe '#to_json' do
-    it
+    it 'searlizes the to_hash value' do
+      expect(file.to_json).to eql '{"oid":"oid","path":"path/foo.md","content":"Hello world!"}'
+    end
   end
-
 end
