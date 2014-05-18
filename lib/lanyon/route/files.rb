@@ -1,52 +1,13 @@
 module Lanyon::Route::Files
   def self.registered(app)
-    repo_manager = Lanyon::RepositoryManager.new(app.repo_dir)
+    require 'lanyon/route/files/post'
+    require 'lanyon/route/files/get'
+    require 'lanyon/route/files/put'
+    require 'lanyon/route/files/delete'
 
-    # CREATE
-    app.post '/files/?' do
-      path = request.params[:path]
-      content = request.params[:content]
-
-      repo_manager.add(path, content)
-    end
-
-    # READ
-    app.get '/files', provides: [:json] do
-      respond_with :files, files: repo_manager.files
-    end
-
-    app.get '/files/:oid', provides: [:html, :json]  do
-      respond_with :editor, file: repo_manager.file(params[:oid])
-    end
-
-    app.get '/files/*/?', provides: [:html, :json]  do
-      path = params[:splat].first
-      respond_with :files, files: repo_manager.files.ls(path)
-    end
-
-    # UPDATE
-    app.put '/files/?' do
-      oid = request.params[:oid]
-      path = request.params[:path]
-      content = request.params[:content]
-
-      file = repo_manager.file(oid)
-
-      halt 501 if file.nil?
-
-      repo_manager.move(file, path) if path && path != file.path
-      repo_manager.update(file, content) if content && content != file.content
-    end
-
-    # DELETE
-    app.delete '/files/?' do
-      oid = request.params[:oid]
-
-      file = repo_manager.file(oid)
-
-      halt 501 if file.nil?
-
-      repo_manager.delete(file)
-    end
+    app.register(Lanyon::Route::Files::Post)
+    app.register(Lanyon::Route::Files::Get)
+    app.register(Lanyon::Route::Files::Put)
+    app.register(Lanyon::Route::Files::Delete)
   end
 end
