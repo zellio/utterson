@@ -1,4 +1,4 @@
-class Lanyon::FileCollection # < ::Array
+class Lanyon::FileCollection
   def initialize(repository)
     @repo = repository
   end
@@ -18,16 +18,16 @@ class Lanyon::FileCollection # < ::Array
   private :hash_to_lanyon_class
 
   def ls(path)
-    tree = path == "" ? root_tree : @repo.lookup(root_tree.path(path)[:oid])
+    tree = (path == "") ? root_tree : @repo.lookup(root_tree.path(path)[:oid])
     tree.map do |hash|
-      hash[:path] = File.join(path, hash[:name])
+      hash[:path] = (path == "") ? hash[:name] : File.join(path, hash[:name])
       hash_to_lanyon_class(hash)
     end.compact
   end
 
   def get(oid)
-    data = @repo.index.find { |entry| entry[:oid] == oid }.merge(type: :blob)
-    hash_to_lanyon_class(data)
+    data = @repo.index.find { |entry| entry[:oid] == oid }
+    hash_to_lanyon_class(data.merge(type: :blob)) if data
   end
 
   def to_json(*)

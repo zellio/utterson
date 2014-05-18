@@ -60,7 +60,7 @@ describe Lanyon::File, fakefs: true do
   end
 
   describe '#move' do
-
+    it
   end
 
   describe '#to_h' do

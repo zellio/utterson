@@ -26,7 +26,7 @@ class Lanyon::File
   end
 
   def read
-    File.read(system_path) if exists?
+    File.read(system_path) if ::File.file?(system_path)
   end
 
   def write
@@ -36,6 +36,10 @@ class Lanyon::File
   def move(path)
     File.rename(system_path, File.join(@root, path))
     @path = path
+  end
+
+  def eql?(other)
+    to_h.eql?(other.to_h)
   end
 
   def to_h
