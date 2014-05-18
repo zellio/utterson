@@ -9,40 +9,40 @@ class Lanyon::File
     @content = content || read
   end
 
-  def web_path
-    File.join('.', @path)
-  end
-
-  def full_path
+  def system_path
     File.join(@root, @path)
   end
 
   def basename
-    File.basename(web_path)
+    File.basename(@path)
   end
 
   def dirname
-    File.dirname(web_path)
+    File.dirname(@path)
   end
 
   def file?
-    File.file?(full_path)
+    File.file?(system_path)
   end
 
   def directory?
-    File.directory?(full_path)
+    File.directory?(system_path)
+  end
+
+  def exists?
+    File.exists?(system_path)
   end
 
   def read
-    File.read(full_path) if file?
+    File.read(system_path) if file?
   end
 
   def write
-    File.write(full_path, @content)
+    File.write(system_path, @content)
   end
 
   def move(path)
-    File.rename(full_path, File.join(@root, path))
+    File.rename(system_path, File.join(@root, path))
     @path = path
   end
 
