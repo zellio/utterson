@@ -15,6 +15,8 @@ class Lanyon::Application < Sinatra::Base
   register Sinatra::ConfigFile
   config_file ['config.yml', File.join(project_root, 'config.yml')]
 
+  set :repo_manager, -> { Lanyon::RepositoryManager.new(repo_dir) }
+
   Liquid::Template.file_system = Liquid::LocalFileSystem.new(views)
   set :liquid, layout: :base
 

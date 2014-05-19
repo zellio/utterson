@@ -1,0 +1,3 @@
+app.get '/' do
+  liquid :index
+end
