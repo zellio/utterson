@@ -38,6 +38,7 @@ class Lanyon::RepositoryManager
 
     @file_collection = nil
   end
+  private :commit
 
   def add(path, content)
     oid = @repo.write(content, :blob)
