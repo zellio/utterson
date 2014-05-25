@@ -6,6 +6,7 @@ class Lanyon::FileCollection
   def root_tree
     @repo.lookup(@repo.head.target).tree
   end
+  private :root_tree
 
   def hash_to_lanyon_class(hash)
     case hash[:type]
