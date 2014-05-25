@@ -19,9 +19,9 @@ class Lanyon::FileCollection
   private :hash_to_lanyon_class
 
   def ls(path)
-    tree = (path == "") ? root_tree : @repo.lookup(root_tree.path(path)[:oid])
+    tree = (path == '') ? root_tree : @repo.lookup(root_tree.path(path)[:oid])
     tree.map do |hash|
-      hash[:path] = (path == "") ? hash[:name] : File.join(path, hash[:name])
+      hash[:path] = (path == '') ? hash[:name] : File.join(path, hash[:name])
       hash_to_lanyon_class(hash)
     end.compact
   end

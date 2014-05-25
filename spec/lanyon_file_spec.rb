@@ -65,8 +65,8 @@ describe Lanyon::File, fakefs: true do
       old_path = file.system_path
       file.move('bar.md')
       new_path = file.system_path
-      expect(::File.exists?(new_path)).to be_true
-      expect(::File.exists?(old_path)).to be_false
+      expect(::File.exist?(new_path)).to be_true
+      expect(::File.exist?(old_path)).to be_false
     end
   end
 

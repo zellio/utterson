@@ -22,7 +22,7 @@ class Lanyon::File
   end
 
   def exists?
-    File.exists?(system_path)
+    File.exist?(system_path)
   end
 
   def read

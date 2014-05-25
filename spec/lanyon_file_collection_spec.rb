@@ -10,10 +10,10 @@ describe Lanyon::FileCollection do
   end
 
   describe '#ls' do
-    let(:files) { file_collection.ls("") }
+    let(:files) { file_collection.ls('') }
 
     it 'lists the repo files of target path' do
-      #TODO: Improve this spec
+      # TODO: Improve this spec
       expect(files.count).to be 13
       expect(files[0].path).to eql '.gitignore'
     end
@@ -21,7 +21,7 @@ describe Lanyon::FileCollection do
 
   describe '#get' do
     it 'reads a file by oid from the collection' do
-      file = file_collection.ls("")[0]
+      file = file_collection.ls('')[0]
       expect(file_collection.get(file.oid)).to eql file
     end
 
