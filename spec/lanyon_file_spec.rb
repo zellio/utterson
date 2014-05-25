@@ -37,6 +37,7 @@ describe Lanyon::File, fakefs: true do
 
   describe '#exists?' do
     it 'is a wrapper around File.exists?' do
+      expect(file.exists?).to be_true
     end
   end
 
@@ -60,7 +61,13 @@ describe Lanyon::File, fakefs: true do
   end
 
   describe '#move' do
-    it
+    it 'moves the file to a new path' do
+      old_path = file.system_path
+      file.move('bar.md')
+      new_path = file.system_path
+      expect(::File.exists?(new_path)).to be_true
+      expect(::File.exists?(old_path)).to be_false
+    end
   end
 
   describe '#to_h' do
