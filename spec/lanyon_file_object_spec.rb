@@ -1,0 +1,96 @@
+require 'spec_helper'
+
+describe Lanyon::FileObject, fakefs: true do
+
+  before(:each) do
+    Dir.mkdir('/root')
+    Dir.mkdir('/root/path')
+
+    File.write('/root/path/file.md', "# Hello world!\n...")
+  end
+
+  let(:file) { Lanyon::FileObject.new('path/file.md', 'oid_val', '/root') }
+  let(:dir)  { Lanyon::FileObject.new('path', 'oid_val', '/root') }
+
+  let(:file_with_content) do
+    Lanyon::FileObject.new('path/file.md', 'oid_val', '/root', true)
+  end
+
+  describe '#system_path' do
+    it 'is the full path of the file on disk' do
+      expect(file.system_path).to eql '/root/path/file.md'
+    end
+  end
+
+  describe '#basename' do
+    it 'is the filename of the file' do
+      expect(file.basename).to eql 'file.md'
+    end
+  end
+
+  describe '#dirname' do
+    it 'is the relative path of the file' do
+      expect(file.dirname).to eql 'path'
+    end
+  end
+
+  describe '#file?' do
+    it 'is true if the FileObject points to a file' do
+      expect(file.file?).to be_true
+    end
+
+    it 'is false if the FileObject isn\'t a file' do
+      expect(dir.file?).to be_false
+    end
+  end
+
+  describe '#directory?' do
+    it 'is true if the FileObject points to a directory' do
+      expect(dir.directory?).to be_true
+    end
+
+    it 'is false if the FileObject isn\'t a file' do
+      expect(file.directory?).to be_false
+    end
+  end
+
+  describe '#to_h' do
+    let(:hash) { file.to_h }
+    let(:chash) { file_with_content.to_h }
+
+    it 'is a hash of the relevant public values' do
+      expect(hash).to be_a(::Hash)
+    end
+
+    it 'provides the oid value' do
+      expect(hash[:oid]).to eql 'oid_val'
+    end
+
+    it 'provides the path value' do
+      expect(hash[:path]).to eql 'path/file.md'
+    end
+
+    it 'provides content value' do
+      expect(hash[:content]).to be_false
+      expect(chash[:content]).to be_true
+    end
+  end
+
+  describe '#to_liquid' do
+    it 'converts the keys of to_h to strings' do
+      expect(file.to_liquid).to eql ({"oid" => "oid_val", "path" => "path/file.md"})
+    end
+  end
+
+  describe '#to_json' do
+    it 'searlizes the to_h value' do
+      expect(file.to_json).to eql '{"oid":"oid_val","path":"path/file.md"}'
+    end
+  end
+
+  describe '#eql?' do
+    it 'compares object as a hash' do
+      expect(file).to eql file.to_h
+    end
+  end
+end

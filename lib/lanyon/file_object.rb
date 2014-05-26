@@ -29,12 +29,21 @@ class Lanyon::FileObject
   end
 
   def directory?
-    File.directory(system_path)
+    File.directory?(system_path)
+  end
+
+  def flush_content
+    @content = false
   end
 
   def to_h
-    { oid: @oid,
-      path: @path }
+    hash = { oid: @oid, path: @path }
+    hash[:content] = @content if content
+    hash
+  end
+
+  def eql?(other)
+    to_h.eql?(other.to_h)
   end
 
   def to_liquid
