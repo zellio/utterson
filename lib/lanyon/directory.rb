@@ -27,4 +27,9 @@ class Lanyon::Directory < Lanyon::FileObject
       hash_to_lanyon_class(hash)
     end.compact
   end
+
+  def get(oid)
+    data = @repo.index.find { |entry| entry[:oid] == oid }
+    hash_to_lanyon_class(data.merge(type: :blob)) if data
+  end
 end
