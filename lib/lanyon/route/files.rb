@@ -11,18 +11,34 @@ module Lanyon::Route::Files
     end
 
     # READ
-    app.get '/files', provides: [:json] do
+    app.get '/files/*/', provides: [:json] do
+      files = repo_manager.directory(params[:splat].first) rescue nil
+
+      halt 404 if files.nil?
+
       respond_with :files, files: files
     end
 
-    app.get '/files/:oid', provides: [:html, :json]  do
-      respond_with :editor, file: repo_manager.file(params[:oid])
+    app.get '/files/*', provides: [:json] do
+      file = repo_manager.file(params[:splat].first) rescue nil
+
+      halt 404 if file.nil?
+
+      respond_with :editor, file: file
     end
 
-    app.get '/files/*/?', provides: [:html, :json]  do
-      path = params[:splat].first
-      respond_with :files, files: repo_manager.files.ls(path)
-    end
+    # app.get '/files', provides: [:json] do
+    #   respond_with :files, files: files
+    # end
+
+    # app.get '/files/:oid', provides: [:html, :json]  do
+    #   respond_with :editor, file: repo_manager.file(params[:oid])
+    # end
+
+    # app.get '/files/*/?', provides: [:html, :json]  do
+    #   path = params[:splat].first
+    #   respond_with :files, files: repo_manager.directory(path)
+    # end
 
     # UPDATE
     app.put '/files/?' do
