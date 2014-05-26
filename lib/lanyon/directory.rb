@@ -1,5 +1,6 @@
-class Lanyon::FileCollection
-  def initialize(repository)
+class Lanyon::Directory < Lanyon::FileObject
+  def initialize(path, oid, repository, content = false)
+    super(path, oid, repository.workdir, content)
     @repo = repository
   end
 
@@ -13,27 +14,17 @@ class Lanyon::FileCollection
     when :blob
       Lanyon::File.new(@repo.workdir, hash[:path], hash[:oid])
     when :tree
-      hash
+      Lanyon::Directory.new(hash[:path], hash[:oid], @repo)
     end
   end
   private :hash_to_lanyon_class
 
-  def ls(path)
+  def content
+    return @content unless @content
     tree = (path == '') ? root_tree : @repo.lookup(root_tree.path(path)[:oid])
     tree.map do |hash|
       hash[:path] = (path == '') ? hash[:name] : File.join(path, hash[:name])
       hash_to_lanyon_class(hash)
     end.compact
-  end
-
-  def get(oid)
-    data = @repo.index.find { |entry| entry[:oid] == oid }
-    hash_to_lanyon_class(data.merge(type: :blob)) if data
-  end
-
-  def to_json(*)
-    @repo.index.map do |data|
-      Lanyon::File.new(@repo.workdir, data[:path], data[:oid])
-    end.to_json
   end
 end

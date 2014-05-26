@@ -12,7 +12,7 @@ module Lanyon::Route::Files
 
     # READ
     app.get '/files', provides: [:json] do
-      respond_with :files, files: repo_manager.files
+      respond_with :files, files: files
     end
 
     app.get '/files/:oid', provides: [:html, :json]  do
