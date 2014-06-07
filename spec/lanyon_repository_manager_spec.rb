@@ -1,23 +1,36 @@
 require 'spec_helper'
 
-describe Lanyon::RepositoryManager, fakefs: true  do
+describe Lanyon::RepositoryManager  do
 
-  before(:each) do
-    # FakeFS::FileSystem.clone(::File.join(__dir__, 'testrepo'), 'repo/.git')
-  end
+  let(:repo_dir) { File.join(__dir__, "spec_repo.#{Time.now.to_i}") }
+  let(:repo_manager) { Lanyon::RepositoryManager.new(repo_dir) }
 
-  # let(:repo_manager) { Lanyon::RepositoryManager.new('repo') }
+  around(:each) { |example| fakegit(repo_dir, &example) }
 
   describe '#initialize' do
-    it
+    it '' do
+    end
   end
 
   describe '#author' do
-    it
+    it 'contains the commiter\'s email' do
+      expect(repo_manager.author[:email]).to eql 'lanyon@localhost'
+    end
+
+    it 'contains the commiter\'s name' do
+      expect(repo_manager.author[:name]).to eql 'Dr. Lanyon'
+    end
+
+    it 'contains the current time' do
+      Time.stub(:now) { Time.mktime(1970,1,1) }
+      expect(repo_manager.author[:time]).to eql Time.now
+    end
   end
 
   describe '#files' do
-    it
+    it 'returns a file collection' do
+      expect(repo_manager.files).to be_a(Lanyon::FileCollection)
+    end
   end
 
   describe '#file' do
