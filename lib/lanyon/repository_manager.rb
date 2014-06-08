@@ -15,7 +15,16 @@ class Lanyon::RepositoryManager
   end
 
   def object_data(path)
-    @repo.lookup(@repo.head.target).tree.path(path)
+    base_tree = @repo.lookup(@repo.head.target).tree
+
+    if path.empty?
+      { :name => '',
+        :oid => base_tree.oid,
+        :filemode => ::File.stat(@repo.workdir).mode,
+        :type => :tree }
+    else
+      base_tree.path(path)
+    end
   end
   private :object_data
 
@@ -27,6 +36,8 @@ class Lanyon::RepositoryManager
   end
 
   def directory(path, content = true)
+    path ||= ''
+
     data = object_data(path)
     if data[:type] == :tree
       Lanyon::Directory.new(path, data[:oid], @repo, content)

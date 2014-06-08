@@ -4,7 +4,7 @@ class Lanyon::Directory < Lanyon::FileObject
     @repo = repository
 
     if content
-      tree = (path == '') ? root_tree : @repo.lookup(oid)
+      tree = path.empty? ? root_tree : @repo.lookup(oid)
       @content = tree.map do |hash|
         hash[:path] = (path == '') ? hash[:name] : File.join(path, hash[:name])
         hash_to_lanyon_class(hash)
