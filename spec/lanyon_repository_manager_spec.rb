@@ -27,18 +27,11 @@ describe Lanyon::RepositoryManager  do
     end
   end
 
-  describe '#files' do
-    it 'returns a file collection' do
-      expect(repo_manager.files).to be_a(Lanyon::FileCollection)
-    end
-  end
-
   describe '#file' do
     it
   end
 
-  describe '#commit' do
-    it
+  describe '#directory' do
   end
 
   describe '#add' do

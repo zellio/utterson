@@ -36,21 +36,21 @@ describe Lanyon::FileObject, fakefs: true do
 
   describe '#file?' do
     it 'is true if the FileObject points to a file' do
-      expect(file.file?).to be_true
+      expect(file.file?).to be true
     end
 
     it 'is false if the FileObject isn\'t a file' do
-      expect(dir.file?).to be_false
+      expect(dir.file?).to be false
     end
   end
 
   describe '#directory?' do
     it 'is true if the FileObject points to a directory' do
-      expect(dir.directory?).to be_true
+      expect(dir.directory?).to be true
     end
 
     it 'is false if the FileObject isn\'t a file' do
-      expect(file.directory?).to be_false
+      expect(file.directory?).to be false
     end
   end
 
@@ -71,8 +71,8 @@ describe Lanyon::FileObject, fakefs: true do
     end
 
     it 'provides content value' do
-      expect(hash[:content]).to be_false
-      expect(chash[:content]).to be_true
+      expect(hash[:content]).to be_falsey
+      expect(chash[:content]).to be_truthy
     end
   end
 

@@ -15,9 +15,9 @@ describe Lanyon::File, fakefs: true do
   end
 
   describe '#initialize' do
-    it 'provides content be reading from disk' do
+    it 'provides content by reading from disk' do
       expect(file_with_content.content).to eql "# Hello World!\n..."
-      expect(file.content).to be_false
+      expect(file.content).to be_falsey
     end
   end
 
@@ -45,8 +45,8 @@ describe Lanyon::File, fakefs: true do
       old_path = file.system_path
       file.move('bar.md')
       new_path = file.system_path
-      expect(::File.exist?(new_path)).to be_true
-      expect(::File.exist?(old_path)).to be_false
+      expect(::File.exist?(new_path)).to be true
+      expect(::File.exist?(old_path)).to be false
     end
   end
 end
