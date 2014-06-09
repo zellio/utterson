@@ -8,8 +8,7 @@ describe Lanyon::RepositoryManager  do
   around(:each) { |example| fakegit(repo_dir, &example) }
 
   describe '#initialize' do
-    it '' do
-    end
+    it
   end
 
   describe '#author' do
