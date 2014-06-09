@@ -1,22 +1,14 @@
 require 'spec_helper'
 
-describe Lanyon::Directory, fakefs: true do
+describe Lanyon::Directory do
+  let(:repo_dir) { File.join(__dir__, "spec_repo.#{Time.now.to_i}") }
+  let(:repo) { Rugged::Repository.new(repo_dir) }
 
-  before(:each) do
-    Dir.mkdir('/root')
-    Dir.mkdir('/root/path')
-  end
+  around(:each) { |example| fakegit(repo_dir, &example) }
 
-  let(:repo) {}
-  let(:dir) { Lanyon::Direcotry.new('path', 'oid_val', '/root') }
-  let(:dir_with_content) do
-    Lanyon::Directory.new('path', 'oid_val', repo, true)
-  end
+  let(:dir) { Lanyon::Directory.new('src', 'oval', repo) }
 
   describe '#initialize' do
-  end
-
-  describe '#content' do
     it
   end
 end
