@@ -7,7 +7,7 @@ describe Lanyon::Directory, fakefs: true do
     Dir.mkdir('/root/path')
   end
 
-  let(:repo) { }
+  let(:repo) {}
   let(:dir) { Lanyon::Direcotry.new('path', 'oid_val', '/root') }
   let(:dir_with_content) do
     Lanyon::Directory.new('path', 'oid_val', repo, true)

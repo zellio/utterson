@@ -22,7 +22,7 @@ describe Lanyon::RepositoryManager  do
     end
 
     it 'contains the current time' do
-      Time.stub(:now) { Time.mktime(1970,1,1) }
+      Time.stub(:now) { Time.mktime(1970, 1, 1) }
       expect(repo_manager.author[:time]).to eql Time.now
     end
   end

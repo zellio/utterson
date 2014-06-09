@@ -47,7 +47,7 @@ class Lanyon::FileObject
   end
 
   def to_liquid
-    to_h.inject({}) do |hash, kv_pair|
+    to_h.reduce({}) do |hash, kv_pair|
       key, val = *kv_pair
       hash[key.to_s] = val
       hash

@@ -9,11 +9,11 @@ describe Lanyon::FileObject, fakefs: true do
     File.write('/root/path/file.md', "# Hello world!\n...")
   end
 
-  let(:file) { Lanyon::FileObject.new('path/file.md', 'oid_val', '/root') }
-  let(:dir)  { Lanyon::FileObject.new('path', 'oid_val', '/root') }
+  let(:file) { Lanyon::FileObject.new('path/file.md', 'oval', '/root') }
+  let(:dir)  { Lanyon::FileObject.new('path', 'oval', '/root') }
 
   let(:file_with_content) do
-    Lanyon::FileObject.new('path/file.md', 'oid_val', '/root', true)
+    Lanyon::FileObject.new('path/file.md', 'oval', '/root', true)
   end
 
   describe '#system_path' do
@@ -63,7 +63,7 @@ describe Lanyon::FileObject, fakefs: true do
     end
 
     it 'provides the oid value' do
-      expect(hash[:oid]).to eql 'oid_val'
+      expect(hash[:oid]).to eql 'oval'
     end
 
     it 'provides the path value' do
@@ -78,13 +78,13 @@ describe Lanyon::FileObject, fakefs: true do
 
   describe '#to_liquid' do
     it 'converts the keys of to_h to strings' do
-      expect(file.to_liquid).to eql ({"oid" => "oid_val", "path" => "path/file.md"})
+      expect(file.to_liquid).to eql('oid' => 'oval', 'path' => 'path/file.md')
     end
   end
 
   describe '#to_json' do
     it 'searlizes the to_h value' do
-      expect(file.to_json).to eql '{"oid":"oid_val","path":"path/file.md"}'
+      expect(file.to_json).to eql '{"oid":"oval","path":"path/file.md"}'
     end
   end
 

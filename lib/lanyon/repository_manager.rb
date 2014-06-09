@@ -18,10 +18,10 @@ class Lanyon::RepositoryManager
     base_tree = @repo.lookup(@repo.head.target).tree
 
     if path.empty?
-      { :name => '',
-        :oid => base_tree.oid,
-        :filemode => ::File.stat(@repo.workdir).mode,
-        :type => :tree }
+      { name: '',
+        oid: base_tree.oid,
+        filemode: ::File.stat(@repo.workdir).mode,
+        type: :tree }
     else
       base_tree.path(path)
     end
