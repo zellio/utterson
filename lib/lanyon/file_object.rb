@@ -33,7 +33,7 @@ class Lanyon::FileObject
   end
 
   def flush_content
-    @content = false
+    @content = nil
   end
 
   def to_h

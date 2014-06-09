@@ -34,6 +34,17 @@ describe Lanyon::FileObject, fakefs: true do
     end
   end
 
+  describe '#exists?' do
+    it 'is true if the file exists' do
+      expect(file.file?).to be true
+    end
+
+    it 'is false if the file does not exist' do
+      bad_file = Lanyon::FileObject.new('bad', 'oval', '/root')
+      expect(bad_file.exists?).to be false
+    end
+  end
+
   describe '#file?' do
     it 'is true if the FileObject points to a file' do
       expect(file.file?).to be true
@@ -51,6 +62,13 @@ describe Lanyon::FileObject, fakefs: true do
 
     it 'is false if the FileObject isn\'t a file' do
       expect(file.directory?).to be false
+    end
+  end
+
+  describe '#flush_content' do
+    it 'nulls the content of the file' do
+      file.flush_content
+      expect(file.content).to be_nil
     end
   end
 
