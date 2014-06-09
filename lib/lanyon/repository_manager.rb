@@ -14,12 +14,34 @@ class Lanyon::RepositoryManager
     { email: @email, name: @name, time: Time.now }
   end
 
-  def files
-    @file_collection ||= Lanyon::FileCollection.new(repo)
+  def object_data(path)
+    base_tree = @repo.lookup(@repo.head.target).tree
+
+    if path.empty?
+      { :name => '',
+        :oid => base_tree.oid,
+        :filemode => ::File.stat(@repo.workdir).mode,
+        :type => :tree }
+    else
+      base_tree.path(path)
+    end
+  end
+  private :object_data
+
+  def file(path, content = true)
+    data = object_data(path)
+    if data[:type] == :blob
+      Lanyon::File.new(path, data[:oid], @repo.workdir, content)
+    end
   end
 
-  def file(oid)
-    files.get(oid)
+  def directory(path, content = true)
+    path ||= ''
+
+    data = object_data(path)
+    if data[:type] == :tree
+      Lanyon::Directory.new(path, data[:oid], @repo, content)
+    end
   end
 
   def commit(message)
