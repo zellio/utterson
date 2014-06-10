@@ -1,10 +1,11 @@
+require 'json'
 require 'sinatra/base'
 require 'sinatra/config_file'
-require 'liquid'
-require 'sass/plugin/rack'
+require 'sinatra/respond_with'
 require 'rack/coffee'
 require 'rack/parser'
-require 'sinatra/respond_with'
+require 'sass/plugin/rack'
+require 'liquid'
 
 class Lanyon::Application < Sinatra::Base
   set :project_root, -> { File.join(__dir__, '..', '..') }
