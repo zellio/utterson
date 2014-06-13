@@ -19,3 +19,6 @@ test/tmp
 test/version_tmp
 tmp
 vendor
+.d8_history
+*.swp
+.\#*
