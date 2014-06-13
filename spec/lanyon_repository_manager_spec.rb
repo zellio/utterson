@@ -29,36 +29,33 @@ describe Lanyon::RepositoryManager  do
     end
   end
 
-  describe '#file' do
+  describe '#get' do
     let(:lfile) { repo_manager.file('README.md') }
+    let(:ldir) { repo_manager.directory('src') }
 
-    it 'Returns a Lanyon::File' do
+    it 'Returns Lanyon::File' do
       expect(lfile).to be_a Lanyon::File
     end
 
-    it 'Looks up a file by name' do
-      expect(lfile.oid).to eql foid
-    end
-
-    it 'Returns nil if the file doesn\'t exist' do
-      expect(repo_manager.file('fake_file')).to be_nil
-    end
-  end
-
-  describe '#directory' do
-    let(:ldir) { repo_manager.directory('src') }
-
-    it 'Returns a Lanyon::Directory' do
+    it 'Returns Lanyon::Directory' do
       expect(ldir).to be_a Lanyon::Directory
     end
 
-    it 'Looks up a directory by name' do
+    it 'Looks up stuff by name' do
+      expect(lfile.oid).to eql foid
       expect(ldir.oid).to eql doid
     end
 
-    it 'Returns nil if the directory doesn\'t exist' do
+    it 'Returns nil if traget doesn\t exist' do
+      expect(repo_manager.file('fake_file')).to be_nil
       expect(repo_manager.file('fake_dir')).to be_nil
     end
+  end
+
+  describe '#file' do
+  end
+
+  describe '#directory' do
   end
 
   describe '#add' do
