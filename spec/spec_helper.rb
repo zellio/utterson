@@ -24,3 +24,11 @@ def fakegit(repo_dir, &block)
 
   FileUtils.rm_r(test_repo)
 end
+
+ENV['RACK_ENV'] = 'test'
+
+require 'rack/test'
+
+RSpec.configure do |config|
+  config.include Rack::Test::Methods, rackup: true
+end
