@@ -25,24 +25,48 @@ class Lanyon::RepositoryManager
     else
       base_tree.path(path)
     end
+
   end
   private :object_data
 
-  def file(path, content = true)
-    data = object_data(path)
-    if data[:type] == :blob
-      Lanyon::File.new(path, data[:oid], @repo.workdir, content)
+  def hash_to_lanyon_class(hash)
+    case hash[:type]
+    when :blob
+      Lanyon::File.new(hash[:name], hash[:oid], @repo.workdir, true)
+    when :tree
+      Lanyon::Directory.new(hash[:name], hash[:oid], @repo, false)
     end
   end
+  private :hash_to_lanyon_class
 
-  def directory(path, content = true)
+  def get(path, content = true)
     path ||= ''
-
     data = object_data(path)
-    if data[:type] == :tree
-      Lanyon::Directory.new(path, data[:oid], @repo, content)
-    end
+    hash_to_lanyon_class(data)
+  rescue
+    nil
   end
+  private :get
+
+  alias_method :file, :get
+  public :file
+  # def file(path, content = true)
+  #   data = object_data(path)
+  #   if data[:type] == :blob
+  #     Lanyon::File.new(path, data[:oid], @repo.workdir, content)
+  #   end
+  # end
+
+  alias_method :directory, :get
+  public :directory
+  # def directory(path, content = true)
+  #   path ||= ''
+
+  #   data = object_data(path)
+  #   if data[:type] == :tree
+  #     Lanyon::Directory.new(path, data[:oid], @repo, content)
+  #   end
+  # end
 
   def commit(message)
     tree_oid = @repo.index.write_tree
