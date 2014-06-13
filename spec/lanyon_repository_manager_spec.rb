@@ -52,12 +52,6 @@ describe Lanyon::RepositoryManager  do
     end
   end
 
-  describe '#file' do
-  end
-
-  describe '#directory' do
-  end
-
   describe '#add' do
     it
   end

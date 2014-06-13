@@ -46,27 +46,10 @@ class Lanyon::RepositoryManager
   rescue
     nil
   end
-  private :get
 
   alias_method :file, :get
-  public :file
-  # def file(path, content = true)
-  #   data = object_data(path)
-  #   if data[:type] == :blob
-  #     Lanyon::File.new(path, data[:oid], @repo.workdir, content)
-  #   end
-  # end
 
   alias_method :directory, :get
-  public :directory
-  # def directory(path, content = true)
-  #   path ||= ''
-
-  #   data = object_data(path)
-  #   if data[:type] == :tree
-  #     Lanyon::Directory.new(path, data[:oid], @repo, content)
-  #   end
-  # end
 
   def commit(message)
     tree_oid = @repo.index.write_tree
