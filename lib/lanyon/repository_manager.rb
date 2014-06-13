@@ -39,7 +39,7 @@ class Lanyon::RepositoryManager
   end
   private :hash_to_lanyon_class
 
-  def get(path, content = true)
+  def get(path = nil, content = true)
     path ||= ''
     data = object_data(path)
     hash_to_lanyon_class(data)
@@ -64,8 +64,6 @@ class Lanyon::RepositoryManager
                           message: "#{@name} is #{message}",
                           parents: commit_parents,
                           update_ref: 'HEAD')
-
-    @file_collection = nil
   end
   private :commit
 
