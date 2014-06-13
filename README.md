@@ -1,5 +1,7 @@
 # Lanyon
 
+[![Code Climate](https://codeclimate.com/github/zellio/lanyon.png)](https://codeclimate.com/github/zellio/lanyon)
+
 TODO: Write a gem description
 
 ## Installation
