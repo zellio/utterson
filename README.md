@@ -1,6 +1,7 @@
 # Lanyon
 
 [![Code Climate](https://codeclimate.com/github/zellio/lanyon.png)](https://codeclimate.com/github/zellio/lanyon)
+[![Build Status](https://travis-ci.org/zellio/lanyon.svg?branch=develop)](https://travis-ci.org/zellio/lanyon)
 
 TODO: Write a gem description
 
