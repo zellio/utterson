@@ -46,6 +46,12 @@ describe Lanyon::RepositoryManager  do
       expect(ldir.oid).to eql doid
     end
 
+    it 'Treats empty as the root directory' do
+      root = repo_manager.get
+      expect(root).to be_a(Lanyon::Directory)
+      expect(root.oid).to eql 'ec3161e34c15377c878da3d385f1baad10071513'
+    end
+
     it 'Returns nil if traget doesn\t exist' do
       expect(repo_manager.file('fake_file')).to be_nil
       expect(repo_manager.file('fake_dir')).to be_nil
