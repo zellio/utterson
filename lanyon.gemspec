@@ -36,4 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rack-coffee', '~> 1.0'
   spec.add_dependency 'rack-parser', '~> 0.6'
   spec.add_dependency 'rugged', '~> 0.19'
+  spec.add_dependency 'therubyracer', '~> 0.12'
 end
