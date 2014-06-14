@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'rugged'
 
 class Lanyon::RepositoryManager
@@ -94,14 +95,19 @@ class Lanyon::RepositoryManager
     commit("updating <#{file.path}> with new content")
   end
 
-  def move(file, path)
-    old_path = file.path
-    file.move(path)
+  def move(path, target)
+    file = get(path)
+    return unless file && get(target).nil?
 
-    @repo.index.remove(old_path)
-    @repo.index.add(file.path)
+    target_path = ::File.join(@repo.workdir, target)
+    FileUtils.mkdir_p(::File.dirname(target_path))
 
-    commit("moving <#{old_path}> to <#{file.path}>")
+    file.move(target)
+
+    @repo.index.remove(path)
+    @repo.index.add(target)
+
+    commit("moving <#{path}> to <#{target}>")
   end
 
   def delete(file)

@@ -1,15 +1,15 @@
 class Lanyon::FileObject
-  attr_reader :path, :oid, :content
+  attr_reader :path, :oid, :content, :repo_root
 
-  def initialize(path, oid, system_root = '', content = false)
+  def initialize(path, oid, repo_root = '', content = false)
     @path = path
     @oid = oid
-    @system_root = system_root
+    @repo_root = repo_root
     @content = content
   end
 
   def system_path
-    File.join(@system_root, @path)
+    File.join(@repo_root, @path)
   end
 
   def basename

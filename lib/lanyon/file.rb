@@ -1,7 +1,7 @@
 class Lanyon::File < Lanyon::FileObject
   attr_accessor :content
 
-  def initialize(path, oid, system_root = '', content = false)
+  def initialize(path, oid, repo_root = '', content = false)
     super
     @content = read if @content
   end
@@ -15,7 +15,7 @@ class Lanyon::File < Lanyon::FileObject
   end
 
   def move(path)
-    ::File.rename(system_path, ::File.join(@system_root, path))
+    ::File.rename(system_path, ::File.join(@repo_root, path))
     @path = path
   end
 end
