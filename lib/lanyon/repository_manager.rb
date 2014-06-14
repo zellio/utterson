@@ -79,7 +79,11 @@ class Lanyon::RepositoryManager
     commit("creating new file: #{file.path}")
   end
 
-  def update(file, content)
+  def update(path, content)
+    file = get(path)
+
+    return if file.nil?
+
     file.content = content
     file.write
 

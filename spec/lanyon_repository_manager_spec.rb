@@ -76,7 +76,23 @@ describe Lanyon::RepositoryManager  do
   end
 
   describe '#update' do
-    it
+    let(:path) { 'README.md' }
+    let(:full_path) { ::File.join(repo_dir, path) }
+    let(:content) { 'Hello world!' }
+
+    before(:each) { @commit = repo_manager.update(path, content) }
+
+    it 'updates the content of a target file' do
+      expect(::File.read(full_path)).to eql content
+    end
+
+    it 'returns nil if the file doesn\'t already exist' do
+      expect(repo_manager.update('bad_path', content)).to be_nil
+    end
+
+    it 'commits  the updates to the controlled repository' do
+      expect(repo_manager.repo.head.target).to eql @commit
+    end
   end
 
   describe '#move' do
