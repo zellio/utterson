@@ -73,6 +73,10 @@ describe Lanyon::RepositoryManager  do
     it 'commits the new file to the controlled repository' do
       expect(repo_manager.repo.head.target).to eql @commit
     end
+
+    it 'returns nil if the file exists' do
+      expect(repo_manager.add('README.md', '')).to be_nil
+    end
   end
 
   describe '#update' do

@@ -68,9 +68,11 @@ class Lanyon::RepositoryManager
   private :commit
 
   def add(path, content)
-    oid = @repo.write(content, :blob)
+    return unless get(path).nil?
 
+    oid = @repo.write(content, :blob)
     file = Lanyon::File.new(path, oid, @repo.workdir)
+
     file.content = content
     file.write unless file.exists?
 
