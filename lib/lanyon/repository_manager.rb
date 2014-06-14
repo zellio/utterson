@@ -70,7 +70,8 @@ class Lanyon::RepositoryManager
   def add(path, content)
     oid = @repo.write(content, :blob)
 
-    file = Lanyon::File.new(@repo.workdir, path, oid, content)
+    file = Lanyon::File.new(path, oid, @repo.workdir)
+    file.content = content
     file.write unless file.exists?
 
     @repo.index.add(path: file.path, oid: file.oid, mode: 0100644)

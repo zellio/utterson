@@ -52,14 +52,27 @@ describe Lanyon::RepositoryManager  do
       expect(root.oid).to eql 'ec3161e34c15377c878da3d385f1baad10071513'
     end
 
-    it 'Returns nil if traget doesn\t exist' do
+    it 'Returns nil if traget doesn\'t exist' do
       expect(repo_manager.file('fake_file')).to be_nil
       expect(repo_manager.file('fake_dir')).to be_nil
     end
   end
 
   describe '#add' do
-    it
+    let(:path) { 'file.txt' }
+    let(:full_path) { ::File.join(repo_dir, path) }
+    let(:content) { 'Hello world!' }
+
+    before(:each) { @commit = repo_manager.add(path, content) }
+
+    it 'creates a file with content at target path' do
+      expect(::File.exists?(full_path)).to be true
+      expect(::File.read(full_path)).to eql content
+    end
+
+    it 'commits the new file to the controlled repository' do
+      expect(repo_manager.repo.head.target).to eql @commit
+    end
   end
 
   describe '#update' do

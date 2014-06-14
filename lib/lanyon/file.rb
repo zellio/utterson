@@ -11,11 +11,11 @@ class Lanyon::File < Lanyon::FileObject
   end
 
   def write
-    File.write(system_path, @content) if @content
+    ::File.write(system_path, @content) if @content
   end
 
   def move(path)
-    File.rename(system_path, File.join(@system_root, path))
+    ::File.rename(system_path, ::File.join(@system_root, path))
     @path = path
   end
 end
