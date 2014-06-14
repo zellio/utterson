@@ -110,8 +110,13 @@ class Lanyon::RepositoryManager
     commit("moving <#{path}> to <#{target}>")
   end
 
-  def delete(file)
+  def delete(path)
+    file = get(path)
+
+    return if file.nil?
+
     file.delete
+
     @repo.index.remove(file.path)
 
     commit("deleting <#{file.path}>")

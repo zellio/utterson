@@ -130,6 +130,24 @@ describe Lanyon::RepositoryManager  do
   end
 
   describe '#delete' do
-    it
+    let(:path) { 'README.md' }
+    let(:full_path) { ::File.join(repo_dir, path) }
+
+    before(:each) do
+      ::File.write(full_path, "\n# This is testing repository\n\n...")
+      @commit = repo_manager.delete(path)
+    end
+
+    it 'deletes the file' do
+      expect(::File.exist?(full_path)).to be false
+    end
+
+    it 'returns nil if the file doesn\'t exist' do
+      expect(repo_manager.delete('bad_path')).to be_nil
+    end
+
+    it 'commits  the updates to the controlled repository' do
+      expect(repo_manager.repo.head.target).to eql @commit
+    end
   end
 end

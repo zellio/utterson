@@ -18,4 +18,8 @@ class Lanyon::File < Lanyon::FileObject
     ::File.rename(system_path, ::File.join(@repo_root, path))
     @path = path
   end
+
+  def delete
+    ::File.delete(system_path)
+  end
 end
