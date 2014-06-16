@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe Lanyon::Route::Index, rackup: true do
 
-  def app
-    Lanyon::Application
-  end
-
   # describe 'POST' do
   #   it
   # end
