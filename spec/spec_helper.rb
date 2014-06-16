@@ -14,7 +14,7 @@ require 'fileutils'
 
 def fakegit(repo_dir, &block)
   source_repo = File.join(__dir__, 'testrepo')
-  test_repo = repo_dir # File.join(__dir__, "rspec_repo.#{Time.now.to_i}")
+  test_repo = repo_dir
   test_repo_git_dir = File.join(test_repo, '.git')
 
   FileUtils.mkdir_p(test_repo_git_dir)
@@ -28,6 +28,12 @@ end
 ENV['RACK_ENV'] = 'test'
 
 require 'rack/test'
+
+module Rack::Test::Methods
+  def app
+    Lanyon::Application
+  end
+end
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods, rackup: true
