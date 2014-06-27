@@ -1,4 +1,4 @@
-require 'json'
+require 'multi_json'
 require 'sinatra/base'
 require 'sinatra/config_file'
 require 'sinatra/respond_with'
@@ -31,7 +31,7 @@ class Lanyon::Application < Sinatra::Base
   use Rack::Coffee, root: public_folder, urls: '/js'
 
   use Rack::Parser, parsers: {
-    'application/json' => proc { |d| JSON.parse(d, symbolize_names: true) }
+    /json/ => proc { |body| ::MultiJson.decode(body) }
   }
 
   register Sinatra::RespondWith

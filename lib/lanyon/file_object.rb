@@ -55,6 +55,6 @@ class Lanyon::FileObject
   end
 
   def to_json(*)
-    to_h.to_json
+    ::MultiJson.encode(to_h)
   end
 end
