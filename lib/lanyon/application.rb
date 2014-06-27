@@ -12,6 +12,7 @@ class Lanyon::Application < Sinatra::Base
   set :root, -> { __dir__ }
   set :views, -> { File.join(root, 'templates') }
   set :public_folder, -> { File.join(root, 'assets') }
+  set :repo_manager, -> { r ||= Lanyon::RepositoryManager.new(repo_dir) }
 
   register Sinatra::ConfigFile
   config_file ['config.yml', File.join(project_root, 'config.yml')]

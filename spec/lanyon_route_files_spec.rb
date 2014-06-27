@@ -3,11 +3,16 @@ require 'spec_helper'
 describe Lanyon::Route::Files, rackup: true do
 
   let(:repo_dir) { File.join(__dir__, "spec_repo.#{Time.now.to_i}") }
-  # let(:repo_manager) { Lanyon::RepositoryManager.new(repo_dir) }
 
   let(:foid) { '9eec82ced116713a102a04307e7e18d2509f8698' }
+  let(:roid) { 'ec3161e34c15377c878da3d385f1baad10071513' }
 
-  around(:each) { |example| fakegit(repo_dir, &example) }
+  around(:each) do |example|
+    fakegit(repo_dir) do
+      app.repo_manager = Lanyon::RepositoryManager.new(repo_dir)
+      example.call
+    end
+  end
 
   describe 'POST' do
     it
@@ -15,13 +20,23 @@ describe Lanyon::Route::Files, rackup: true do
 
   describe 'GET' do
     it '/files' do
-      post '/files'
+      get '/files', nil, { 'HTTP_ACCEPT' => 'application/json' }
+
+      val = JSON.parse(last_response.body)
+
       expect(last_response).to be_ok
+      expect(val['files']['oid']).to eql roid
+      expect(val['files']['content'].length).to be 2
     end
 
     it '/files/' do
-      get '/files/'
+      get '/files/', nil, { 'HTTP_ACCEPT' => 'application/json' }
+
+      val = JSON.parse(last_response.body)
+
       expect(last_response).to be_ok
+      expect(val['files']['oid']).to eql roid
+      expect(val['files']['content'].length).to be 2
     end
 
     describe '/files/:path' do

@@ -11,14 +11,13 @@ RSpec.configure do |config|
 end
 
 require 'fileutils'
+require 'rugged'
 
 def fakegit(repo_dir, &block)
   source_repo = File.join(__dir__, 'testrepo')
   test_repo = repo_dir
-  test_repo_git_dir = File.join(test_repo, '.git')
 
-  FileUtils.mkdir_p(test_repo_git_dir)
-  FileUtils.cp_r(File.join(source_repo, '.'), test_repo_git_dir)
+  Rugged::Repository.clone_at(source_repo, test_repo)
 
   yield if block_given?
 
