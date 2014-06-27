@@ -40,8 +40,7 @@ class Lanyon::RepositoryManager
   end
   private :hash_to_lanyon_class
 
-  def get(path = nil, content = true)
-    path ||= ''
+  def get(path)
     data = object_data(path)
     hash_to_lanyon_class(data)
   rescue
@@ -69,7 +68,7 @@ class Lanyon::RepositoryManager
   private :commit
 
   def add(path, content)
-    return unless get(path).nil?
+    return if get(path)
 
     oid = @repo.write(content, :blob)
     file = Lanyon::File.new(path, oid, @repo.workdir)
