@@ -15,20 +15,23 @@ describe Lanyon::Route::Files, rackup: true do
   end
 
   describe 'POST' do
-    it
+    it 'returns 405 if the file exists' do
+      post '/files/', {'path' => 'README.md'}
+      expect(last_response).to be_method_not_allowed
+    end
+
+    it 'creates the file at :path with :content' do
+      target = File.join(repo_dir, 'readme.mdown')
+
+      post '/files/', {path: 'readme.mdown', content: 'Hello world!'}
+
+      expect(File.exist?(target)).to be true
+      expect(File.read(target)).to eql 'Hello world!'
+      expect(last_response).to be_ok
+    end
   end
 
   describe 'GET' do
-    it '/files' do
-      get '/files', nil, { 'HTTP_ACCEPT' => 'application/json' }
-
-      val = JSON.parse(last_response.body)
-
-      expect(last_response).to be_ok
-      expect(val['files']['oid']).to eql roid
-      expect(val['files']['content'].length).to be 2
-    end
-
     it '/files/' do
       get '/files/', nil, { 'HTTP_ACCEPT' => 'application/json' }
 
