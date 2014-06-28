@@ -8,7 +8,7 @@ class Lanyon::Directory < Lanyon::FileObject
   end
 
   def root_tree
-    @repo.lookup(@repo.head.target).tree
+    @repo.last_commit.tree
   end
   private :root_tree
 

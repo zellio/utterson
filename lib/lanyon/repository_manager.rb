@@ -16,7 +16,7 @@ class Lanyon::RepositoryManager
   end
 
   def object_data(path)
-    base_tree = @repo.lookup(@repo.head.target).tree
+    base_tree = @repo.last_commit.tree
 
     if path.empty?
       { name: '',

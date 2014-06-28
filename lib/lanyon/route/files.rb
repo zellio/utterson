@@ -14,7 +14,7 @@ module Lanyon::Route::Files
 
     # READ
     app.get %r{\A/files(?:/(?<path>.*))?\Z}, provides: [:json] do
-      obj = app.repo_manager.directory(params['path']) rescue nil
+      obj = app.repo_manager.get(params['path']) rescue nil
 
       halt 404 if obj.nil?
 

@@ -65,7 +65,7 @@ describe Lanyon::RepositoryManager  do
     end
 
     it 'commits the new file to the controlled repository' do
-      expect(repo_manager.repo.head.target).to eql @commit
+      expect(repo_manager.repo.last_commit.oid).to eql @commit
     end
 
     it 'returns nil if the file exists' do
@@ -89,7 +89,7 @@ describe Lanyon::RepositoryManager  do
     end
 
     it 'commits  the updates to the controlled repository' do
-      expect(repo_manager.repo.head.target).to eql @commit
+      expect(repo_manager.repo.last_commit.oid).to eql @commit
     end
   end
 
@@ -119,7 +119,7 @@ describe Lanyon::RepositoryManager  do
     end
 
     it 'commits  the updates to the controlled repository' do
-      expect(repo_manager.repo.head.target).to eql @commit
+      expect(repo_manager.repo.last_commit.oid).to eql @commit
     end
   end
 
@@ -141,7 +141,7 @@ describe Lanyon::RepositoryManager  do
     end
 
     it 'commits  the updates to the controlled repository' do
-      expect(repo_manager.repo.head.target).to eql @commit
+      expect(repo_manager.repo.last_commit.oid).to eql @commit
     end
   end
 end
