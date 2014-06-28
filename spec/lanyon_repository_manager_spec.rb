@@ -125,11 +125,11 @@ describe Lanyon::RepositoryManager  do
 
   describe '#delete' do
     let(:path) { 'README.md' }
+    let(:file) { Lanyon::File.new(path, foid, repo_dir) }
     let(:full_path) { ::File.join(repo_dir, path) }
 
     before(:each) do
-      ::File.write(full_path, "\n# This is testing repository\n\n...")
-      @commit = repo_manager.delete(path)
+      @commit = repo_manager.delete(file)
     end
 
     it 'deletes the file' do
