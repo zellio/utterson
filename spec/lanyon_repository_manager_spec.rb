@@ -102,7 +102,6 @@ describe Lanyon::RepositoryManager  do
     let(:full_target) { ::File.join(repo_dir, target) }
 
     before(:each) do
-      ::File.write(full_path, "\n# This is testing repository\n\n...")
       @commit = repo_manager.move(file, target)
     end
 

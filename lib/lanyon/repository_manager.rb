@@ -91,17 +91,16 @@ class Lanyon::RepositoryManager
   end
 
   def move(file, target)
-    return unless get(target)
+    return if get(target)
 
-    target_path = ::File.join(@repo.workdir, target)
-    FileUtils.mkdir_p(::File.dirname(target_path))
+    oid = @repo.write(file.read, :blob)
 
     file.move(target)
 
+    @repo.index.add(path: target, oid: oid)
     @repo.index.remove(file.path)
-    @repo.index.add(target)
 
-    commit("moving <#{path}> to <#{target}>")
+    commit("moving <#{file.path}> to <#{target}>")
   end
 
   def delete(file)
@@ -112,3 +111,17 @@ class Lanyon::RepositoryManager
     commit("deleting <#{file.path}>")
   end
 end
+
+
+
+  def add(file, content)
+    oid = @repo.write(content, :blob)
+
+    file.oid = oid
+    file.content = content
+    file.write
+
+    @repo.index.add(path: file.path, oid: file.oid, mode: 0100644)
+
+    commit("creating new file: #{file.path}")
+  end
