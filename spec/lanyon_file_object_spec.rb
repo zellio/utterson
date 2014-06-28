@@ -65,6 +65,12 @@ describe Lanyon::FileObject, fakefs: true do
     end
   end
 
+  describe '#mode' do
+    it 'is the mode of the file on disk' do
+      expect(file.mode).to eql 0100644
+    end
+  end
+
   describe '#flush_content' do
     it 'nulls the content of the file' do
       file.flush_content

@@ -97,7 +97,7 @@ class Lanyon::RepositoryManager
 
     file.move(target)
 
-    @repo.index.add(path: target, oid: oid)
+    @repo.index.add(path: target, oid: oid, mode: file.mode)
     @repo.index.remove(file.path)
 
     commit("moving <#{file.path}> to <#{target}>")

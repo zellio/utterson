@@ -32,6 +32,10 @@ class Lanyon::FileObject
     File.directory?(system_path)
   end
 
+  def mode
+    ::File::Stat.new(system_path).mode
+  end
+
   def flush_content
     @content = nil
   end
