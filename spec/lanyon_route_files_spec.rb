@@ -60,8 +60,35 @@ describe Lanyon::Route::Files, rackup: true do
     end
   end
 
-  describe 'UPDATE' do
-    it
+  describe 'PUT' do
+    it '404s if there is new content and the file doesn\'t exist' do
+      put '/files/', {'path' => 'bad_path' }
+      expect(last_response).to be_not_found
+    end
+
+    it '405s if the destination already exists' do
+      put '/files/', {'path' => 'README.md', 'destination' => 'src/main.c' }
+      expect(last_response).to be_method_not_allowed
+    end
+
+    it 'updates the file contents with newly provided content' do
+      target = ::File.join(repo_dir, 'README.md')
+
+      put '/files/', {'path' => 'README.md', 'content' => 'Such content, so wow.' }
+
+      expect(::File.read(target)).to eql 'Such content, so wow.'
+      expect(last_response).to be_ok
+    end
+
+    it 'moves files to the newly provided path' do
+      target = ::File.join(repo_dir, 'readme.mdown')
+
+      put '/files/', {'path' => 'README.md', 'destination' => 'readme.mdown' }
+
+      expect(::File.exists?(target)).to be true
+      expect(::File.exists?(::File.join(repo_dir, 'README.md'))).to be false
+      expect(last_response).to be_ok
+    end
   end
 
   describe 'DELETE' do

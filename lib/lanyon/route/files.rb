@@ -28,15 +28,16 @@ module Lanyon::Route::Files
     # UPDATE
     app.put '/files/?' do
       path = request.params['path']
+      file = app.repo_manager.get(path)
 
-      file = app.repo_manager.file(path)
-
-      halt 405 if file.nil?
-      halt 404 if file.oid != request.params['oid']
+      halt 404 unless file and file.exists?
 
       content = request.params['content']
+      dest = request.params['destination']
 
-      app.repo_manager.move(file, path) if path && path != file.path
+      halt 405 if app.repo_manager.get(dest)
+
+      app.repo_manager.move(file, dest) if dest && dest != file.path
       app.repo_manager.update(file, content) if content && content != file.content
     end
 

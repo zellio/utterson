@@ -111,17 +111,3 @@ class Lanyon::RepositoryManager
     commit("deleting <#{file.path}>")
   end
 end
-
-
-
-  def add(file, content)
-    oid = @repo.write(content, :blob)
-
-    file.oid = oid
-    file.content = content
-    file.write
-
-    @repo.index.add(path: file.path, oid: file.oid, mode: 0100644)
-
-    commit("creating new file: #{file.path}")
-  end
