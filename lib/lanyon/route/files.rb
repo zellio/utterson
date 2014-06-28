@@ -3,20 +3,21 @@ module Lanyon::Route::Files
     # CREATE
     app.post '/files/?' do
       path = request.params['path']
-      file = app.repo_manager.get(path)
 
-      halt 405 if file
+      file = Lanyon::File.new(path, '', app.repo_manager.repo.workdir)
+
+      halt 405 if file.exists?
 
       content = request.params['content']
 
-      app.repo_manager.add(path, content)
+      app.repo_manager.add(file, content)
     end
 
     # READ
     app.get %r{\A/files(?:/(?<path>.*))?\Z}, provides: [:json] do
       obj = app.repo_manager.get(params['path']) rescue nil
 
-      halt 404 if obj.nil?
+      halt 404 unless obj
 
       obj.read
 
@@ -45,7 +46,7 @@ module Lanyon::Route::Files
 
       file = app.repo_manager.file(path)
 
-      halt 405 if file.nil? || file.oid != request.params['oid']
+      halt 404 if file.nil? || file.oid != request.params['oid']
 
       app.repo_manager.delete(file)
     end

@@ -67,24 +67,20 @@ class Lanyon::RepositoryManager
   end
   private :commit
 
-  def add(path, content)
-    return if get(path)
-
+  def add(file, content)
     oid = @repo.write(content, :blob)
-    file = Lanyon::File.new(path, oid, @repo.workdir)
 
+    file.oid = oid
     file.content = content
-    file.write unless file.exists?
+    file.write
 
     @repo.index.add(path: file.path, oid: file.oid, mode: 0100644)
 
     commit("creating new file: #{file.path}")
   end
 
-  def update(path, content)
-    file = get(path)
-
-    return if file.nil?
+  def update(file, content)
+    return unless file.exists?
 
     file.content = content
     file.write
@@ -94,16 +90,15 @@ class Lanyon::RepositoryManager
     commit("updating <#{file.path}> with new content")
   end
 
-  def move(path, target)
-    file = get(path)
-    return unless file && get(target).nil?
+  def move(file, target)
+    return unless get(target)
 
     target_path = ::File.join(@repo.workdir, target)
     FileUtils.mkdir_p(::File.dirname(target_path))
 
     file.move(target)
 
-    @repo.index.remove(path)
+    @repo.index.remove(file.path)
     @repo.index.add(target)
 
     commit("moving <#{path}> to <#{target}>")

@@ -65,6 +65,18 @@ describe Lanyon::Route::Files, rackup: true do
   end
 
   describe 'DELETE' do
-    it
+    it 'returns 404 if the file doesn\'t' do
+      delete '/files/', {'path' => 'readme.mdown'}
+      expect(last_response).to be_not_found
+    end
+
+    it 'deteles the file with :oid at :path' do
+      target = File.join(repo_dir, 'README.md')
+
+      delete '/files/', {path: 'README.md', oid: foid}
+
+      expect(File.exist?(target)).to be false
+      expect(last_response).to be_ok
+    end
   end
 end

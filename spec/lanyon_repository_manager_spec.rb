@@ -55,9 +55,10 @@ describe Lanyon::RepositoryManager  do
   describe '#add' do
     let(:path) { 'file.txt' }
     let(:full_path) { ::File.join(repo_dir, path) }
+    let(:file) { Lanyon::File.new(path, nil, repo_dir) }
     let(:content) { 'Hello world!' }
 
-    before(:each) { @commit = repo_manager.add(path, content) }
+    before(:each) { @commit = repo_manager.add(file, content) }
 
     it 'creates a file with content at target path' do
       expect(::File.exists?(full_path)).to be true
@@ -67,25 +68,24 @@ describe Lanyon::RepositoryManager  do
     it 'commits the new file to the controlled repository' do
       expect(repo_manager.repo.last_commit.oid).to eql @commit
     end
-
-    it 'returns nil if the file exists' do
-      expect(repo_manager.add('README.md', '')).to be_nil
-    end
   end
 
   describe '#update' do
     let(:path) { 'README.md' }
     let(:full_path) { ::File.join(repo_dir, path) }
+    let(:file) { Lanyon::File.new(path, '', repo_dir) }
+    let(:bad_file) { Lanyon::File.new('bad_path', '', repo_dir) }
+
     let(:content) { 'Hello world!' }
 
-    before(:each) { @commit = repo_manager.update(path, content) }
+    before(:each) { @commit = repo_manager.update(file, content) }
 
     it 'updates the content of a target file' do
       expect(::File.read(full_path)).to eql content
     end
 
     it 'returns nil if the file doesn\'t already exist' do
-      expect(repo_manager.update('bad_path', content)).to be_nil
+      expect(repo_manager.update(bad_file, content)).to be_nil
     end
 
     it 'commits  the updates to the controlled repository' do
@@ -96,22 +96,19 @@ describe Lanyon::RepositoryManager  do
   describe '#move' do
     let(:path) { 'README.md' }
     let(:full_path) { ::File.join(repo_dir, path) }
+    let(:file) { Lanyon::File.new(path, '', repo_dir) }
 
     let(:target) { 'readme.mdown' }
     let(:full_target) { ::File.join(repo_dir, target) }
 
     before(:each) do
       ::File.write(full_path, "\n# This is testing repository\n\n...")
-      @commit = repo_manager.move(path, target)
+      @commit = repo_manager.move(file, target)
     end
 
     it 'moves a file to a new location' do
       expect(::File.exist?(full_path)).to be false
       expect(::File.exist?(full_target)).to be true
-    end
-
-    it 'returns nil if the file doesn\'t exist' do
-      expect(repo_manager.move('bad_path', '')).to be_nil
     end
 
     it 'returns nil if the target exist already' do
@@ -125,8 +122,8 @@ describe Lanyon::RepositoryManager  do
 
   describe '#delete' do
     let(:path) { 'README.md' }
-    let(:file) { Lanyon::File.new(path, foid, repo_dir) }
     let(:full_path) { ::File.join(repo_dir, path) }
+    let(:file) { Lanyon::File.new(path, foid, repo_dir) }
 
     before(:each) do
       @commit = repo_manager.delete(file)
@@ -134,10 +131,6 @@ describe Lanyon::RepositoryManager  do
 
     it 'deletes the file' do
       expect(::File.exist?(full_path)).to be false
-    end
-
-    it 'returns nil if the file doesn\'t exist' do
-      expect(repo_manager.delete('bad_path')).to be_nil
     end
 
     it 'commits  the updates to the controlled repository' do

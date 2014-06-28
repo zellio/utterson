@@ -1,5 +1,5 @@
 class Lanyon::File < Lanyon::FileObject
-  attr_accessor :content
+  attr_accessor :content, :oid
 
   def initialize(path, oid, repo_root = '', content = false)
     super
