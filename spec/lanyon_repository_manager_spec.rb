@@ -10,10 +10,6 @@ describe Lanyon::RepositoryManager  do
 
   around(:each) { |example| fakegit(repo_dir, &example) }
 
-  describe '#initialize' do
-    it
-  end
-
   describe '#author' do
     it 'contains the commiter\'s email' do
       expect(repo_manager.author[:email]).to eql 'lanyon@localhost'
