@@ -30,7 +30,7 @@ module Lanyon::Route::Files
       path = request.params['path']
       file = app.repo_manager.get(path)
 
-      halt 404 unless file and file.exists?
+      halt 404 unless file && file.exists?
 
       content = request.params['content']
       dest = request.params['destination']

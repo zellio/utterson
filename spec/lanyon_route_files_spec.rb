@@ -16,14 +16,14 @@ describe Lanyon::Route::Files, rackup: true do
 
   describe 'POST' do
     it 'returns 405 if the file exists' do
-      post '/files/', {'path' => 'README.md'}
+      post '/files/', 'path' => 'README.md'
       expect(last_response).to be_method_not_allowed
     end
 
     it 'creates the file at :path with :content' do
       target = File.join(repo_dir, 'readme.mdown')
 
-      post '/files/', {path: 'readme.mdown', content: 'Hello world!'}
+      post '/files/', path: 'readme.mdown', content: 'Hello world!'
 
       expect(File.exist?(target)).to be true
       expect(File.read(target)).to eql 'Hello world!'
@@ -33,7 +33,7 @@ describe Lanyon::Route::Files, rackup: true do
 
   describe 'GET' do
     it '/files/' do
-      get '/files/', nil, { 'HTTP_ACCEPT' => 'application/json' }
+      get '/files/', nil,  'HTTP_ACCEPT' => 'application/json'
 
       val = JSON.parse(last_response.body)
 
@@ -44,7 +44,7 @@ describe Lanyon::Route::Files, rackup: true do
 
     describe '/files/:path' do
       it 'returns the file content as JSON' do
-        get '/files/README.md', nil, { 'HTTP_ACCEPT' => 'application/json' }
+        get '/files/README.md', nil,  'HTTP_ACCEPT' => 'application/json'
 
         val = JSON.parse(last_response.body)
 
@@ -62,19 +62,19 @@ describe Lanyon::Route::Files, rackup: true do
 
   describe 'PUT' do
     it '404s if there is new content and the file doesn\'t exist' do
-      put '/files/', {'path' => 'bad_path' }
+      put '/files/', 'path' => 'bad_path'
       expect(last_response).to be_not_found
     end
 
     it '405s if the destination already exists' do
-      put '/files/', {'path' => 'README.md', 'destination' => 'src/main.c' }
+      put '/files/', 'path' => 'README.md', 'destination' => 'src/main.c'
       expect(last_response).to be_method_not_allowed
     end
 
     it 'updates the file contents with newly provided content' do
       target = ::File.join(repo_dir, 'README.md')
 
-      put '/files/', {'path' => 'README.md', 'content' => 'Such content, so wow.' }
+      put '/files/', 'path' => 'README.md', 'content' => 'Such content, so wow.'
 
       expect(::File.read(target)).to eql 'Such content, so wow.'
       expect(last_response).to be_ok
@@ -83,24 +83,24 @@ describe Lanyon::Route::Files, rackup: true do
     it 'moves files to the newly provided path' do
       target = ::File.join(repo_dir, 'readme.mdown')
 
-      put '/files/', {'path' => 'README.md', 'destination' => 'readme.mdown' }
+      put '/files/', 'path' => 'README.md', 'destination' => 'readme.mdown'
 
-      expect(::File.exists?(target)).to be true
-      expect(::File.exists?(::File.join(repo_dir, 'README.md'))).to be false
+      expect(::File.exist?(target)).to be true
+      expect(::File.exist?(::File.join(repo_dir, 'README.md'))).to be false
       expect(last_response).to be_ok
     end
   end
 
   describe 'DELETE' do
     it 'returns 404 if the file doesn\'t' do
-      delete '/files/', {'path' => 'readme.mdown'}
+      delete '/files/', 'path' => 'readme.mdown'
       expect(last_response).to be_not_found
     end
 
     it 'deteles the file with :oid at :path' do
       target = File.join(repo_dir, 'README.md')
 
-      delete '/files/', {path: 'README.md', oid: foid}
+      delete '/files/', path: 'README.md', oid: foid
 
       expect(File.exist?(target)).to be false
       expect(last_response).to be_ok

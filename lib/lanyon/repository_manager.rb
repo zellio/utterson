@@ -26,7 +26,6 @@ class Lanyon::RepositoryManager
     else
       base_tree.path(path)
     end
-
   end
   private :object_data
 

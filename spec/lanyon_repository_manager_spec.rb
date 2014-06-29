@@ -57,7 +57,7 @@ describe Lanyon::RepositoryManager  do
     before(:each) { @commit = repo_manager.add(file, content) }
 
     it 'creates a file with content at target path' do
-      expect(::File.exists?(full_path)).to be true
+      expect(::File.exist?(full_path)).to be true
       expect(::File.read(full_path)).to eql content
     end
 
