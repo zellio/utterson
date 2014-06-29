@@ -67,7 +67,8 @@ describe Lanyon::FileObject, fakefs: true do
 
   describe '#mode' do
     it 'is the mode of the file on disk' do
-      expect(file.mode).to eql 0100644
+      mode = ::File::Stat.new(file.system_path).mode
+      expect(file.mode).to eql mode
     end
   end
 

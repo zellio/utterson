@@ -19,6 +19,8 @@ def fakegit(repo_dir, &block)
 
   Rugged::Repository.clone_at(source_repo, test_repo)
 
+  Dir["#{test_repo}/**/*"].each { |f| File.chmod(0644, f) if File.file?(f) }
+
   yield if block_given?
 
   FileUtils.rm_r(test_repo)
