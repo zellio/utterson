@@ -1,8 +1,6 @@
 module Kernel
   def __file__
-    # I know this is not actually correct but it works for now
-    # TODO: Revisit this method in the future
-    caller[1][/(.+rb)/]
+    caller[1][/\A(.+):\d+:in `.+'\Z/, 1]
   end
 
   def __dir__
