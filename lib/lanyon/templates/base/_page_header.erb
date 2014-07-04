@@ -9,7 +9,7 @@
       </ul>
       <ul class="nav navbar-nav pull-right">
         <li>
-          <% if defined?(username) && ! username.empty? %><a href="#"><%= username %></a><% end %>
+          <%- if defined?(username) && ! username.empty? %><a href="#"><%= username %></a><% end -%>
         </li>
       </ul>
     </nav>

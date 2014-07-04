@@ -1,0 +1,9 @@
+<%- file = object -%>
+<a href="<%= request.path.sub('editor','files') %>/..">up</a>
+<h1><%= file.basename %></h1>
+<textarea id="container">
+</textarea>
+<script type="application/javascript">
+$.ajax({ dataType: "json", url: '<%= request.path %>',
+  success: function(data) { $('#container').text(data.content); } });
+</script>

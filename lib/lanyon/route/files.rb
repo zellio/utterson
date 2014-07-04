@@ -14,15 +14,14 @@ module Lanyon::Route::Files
     end
 
     # READ
-    app.get %r{\A/files(?:/(?<path>.*))?\Z}, provides: [:json] do
+    app.get %r{\A/(?<fn>files|editor)(?:/(?<path>.*))?\Z}, provides: [:html, :json] do
       obj = app.repo_manager.get(params['path']) rescue nil
 
       halt 404 unless obj
 
       obj.read
 
-      respond_with :files, files: obj if obj.is_a? Lanyon::Directory
-      respond_with :editor, file: obj if obj.is_a? Lanyon::File
+      respond_with params['fn'].to_sym, obj
     end
 
     # UPDATE

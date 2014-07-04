@@ -1,0 +1,24 @@
+<%-
+  dir = object
+  dirs = dir.content.select { |x| x.is_a?(Lanyon::Directory) }
+  files = dir.content.select { |x| x.is_a?(Lanyon::File) }
+-%>
+<header>
+  <a href="..">up</a>
+</header>
+<ul>
+  <%- dirs.each do |dir| -%>
+  <li>
+    Dir:
+    <a href="/files/<%= dir.path %>"><%= dir.basename %></a>
+  </li>
+  <%- end -%>
+  <% files.each do |file| %>
+  <li>
+    File:
+    <a href="/editor/<%= file.path %>"><%= file.basename %></a>
+  </li>
+  <% end %>
+</ul>
+<footer>
+</footer>
