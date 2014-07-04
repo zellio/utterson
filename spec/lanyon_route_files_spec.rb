@@ -38,8 +38,8 @@ describe Lanyon::Route::Files, rackup: true do
       val = JSON.parse(last_response.body)
 
       expect(last_response).to be_ok
-      expect(val['files']['oid']).to eql roid
-      expect(val['files']['content'].length).to be 2
+      expect(val['oid']).to eql roid
+      expect(val['content'].length).to be 2
     end
 
     describe '/files/:path' do
@@ -49,8 +49,8 @@ describe Lanyon::Route::Files, rackup: true do
         val = JSON.parse(last_response.body)
 
         expect(last_response).to be_ok
-        expect(val['file']).to be_truthy
-        expect(val['file']['oid']).to eql foid
+        expect(val).to be_truthy
+        expect(val['oid']).to eql foid
       end
 
       it '404s on a bad path' do
