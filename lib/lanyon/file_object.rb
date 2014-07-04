@@ -41,7 +41,7 @@ class Lanyon::FileObject
   end
 
   def to_h
-    hash = { oid: @oid, path: @path }
+    hash = { oid: @oid, path: @path, type: :file_object }
     hash[:content] = @content if @content
     hash
   end

@@ -29,4 +29,8 @@ class Lanyon::Directory < Lanyon::FileObject
       hash_to_lanyon_class(hash)
     end.compact
   end
+
+  def to_h
+    super.to_h.merge(type: :directory)
+  end
 end

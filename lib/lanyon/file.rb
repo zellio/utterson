@@ -22,4 +22,8 @@ class Lanyon::File < Lanyon::FileObject
   def delete
     ::File.delete(system_path)
   end
+
+  def to_h
+    super.to_h.merge(type: :file)
+  end
 end

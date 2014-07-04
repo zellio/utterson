@@ -103,7 +103,7 @@ describe Lanyon::FileObject, fakefs: true do
 
   describe '#to_json' do
     it 'searlizes the to_h value' do
-      expect(file.to_json).to eql '{"oid":"oval","path":"path/file.md"}'
+      expect(file.to_json).to eql '{"oid":"oval","path":"path/file.md","type":"file_object"}'
     end
   end
 
