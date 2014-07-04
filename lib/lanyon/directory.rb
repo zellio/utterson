@@ -2,8 +2,6 @@ class Lanyon::Directory < Lanyon::FileObject
   def initialize(path, oid, repository, content = false)
     super(path, oid, repository.workdir, content)
     @repo = repository
-    @path = path
-
     read if content
   end
 
@@ -25,7 +23,7 @@ class Lanyon::Directory < Lanyon::FileObject
   def read
     tree = @path.empty? ? root_tree : @repo.lookup(oid)
     @content = tree.map do |hash|
-      hash[:path] = (path == '') ? hash[:name] : File.join(path, hash[:name])
+      hash[:path] = (@path == '') ? hash[:name] : File.join(@path, hash[:name])
       hash_to_lanyon_class(hash)
     end.compact
   end

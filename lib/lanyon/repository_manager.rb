@@ -24,7 +24,7 @@ class Lanyon::RepositoryManager
         filemode: ::File.stat(@repo.workdir).mode,
         type: :tree }
     else
-      base_tree.path(path)
+      base_tree.path(path).merge(name: path)
     end
   end
   private :object_data
