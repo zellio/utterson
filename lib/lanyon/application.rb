@@ -5,7 +5,6 @@ require 'sinatra/respond_with'
 require 'rack/coffee'
 require 'rack/parser'
 require 'sass/plugin/rack'
-require 'liquid'
 
 class Lanyon::Application < Sinatra::Base
   set :project_root, -> { File.join(__dir__, '..', '..') }
@@ -17,8 +16,8 @@ class Lanyon::Application < Sinatra::Base
   register Sinatra::ConfigFile
   config_file ['config.yml', File.join(project_root, 'config.yml')]
 
-  Liquid::Template.file_system = Liquid::LocalFileSystem.new(views)
-  set :liquid, layout: :base
+  set :erb, layout: :base
+  set :erb, trim: '-'
 
   Sass::Plugin.options.merge!(
     style: :expanded,

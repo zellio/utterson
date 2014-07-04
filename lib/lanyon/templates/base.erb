@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+  <head>
+    <%= erb :'base/_head', layout: false, locals: locals %>
+  </head>
+  <body>
+    <%= erb :'base/_page_header', layout: false, locals: locals %>
+    <main class="container">
+      <%= yield %>
+    </main>
+  </body>
+</html>

@@ -50,14 +50,6 @@ class Lanyon::FileObject
     to_h.eql?(other.to_h)
   end
 
-  def to_liquid
-    to_h.reduce({}) do |hash, kv_pair|
-      key, val = *kv_pair
-      hash[key.to_s] = val
-      hash
-    end
-  end
-
   def to_json(*)
     ::MultiJson.encode(to_h)
   end

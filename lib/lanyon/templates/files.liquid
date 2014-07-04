@@ -1,8 +1,0 @@
-{% for file in files %}
-   {% assign oid = file.oid %}
-   {% if oid %}
-      {{oid}}
-   {% else %}
-      {{file}}
-   {% endif %}
-{% endfor %}

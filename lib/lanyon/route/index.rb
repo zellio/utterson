@@ -1,7 +1,7 @@
 module Lanyon::Route::Index
   def self.registered(app)
     app.get '/' do
-      liquid :index
+      erb :index, locals: { title: '' }
     end
   end
 end

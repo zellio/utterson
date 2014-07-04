@@ -101,12 +101,6 @@ describe Lanyon::FileObject, fakefs: true do
     end
   end
 
-  describe '#to_liquid' do
-    it 'converts the keys of to_h to strings' do
-      expect(file.to_liquid).to eql('oid' => 'oval', 'path' => 'path/file.md')
-    end
-  end
-
   describe '#to_json' do
     it 'searlizes the to_h value' do
       expect(file.to_json).to eql '{"oid":"oval","path":"path/file.md"}'
