@@ -6,19 +6,27 @@
 <header>
   <a href="..">up</a>
 </header>
-<ul>
-  <%- dirs.each do |dir| -%>
-  <li>
-    Dir:
-    <a href="/files/<%= dir.path %>"><%= dir.basename %></a>
-  </li>
-  <%- end -%>
-  <% files.each do |file| %>
-  <li>
-    File:
-    <a href="/editor/<%= file.path %>"><%= file.basename %></a>
-  </li>
-  <% end %>
-</ul>
+<div id="content">
+  <div id="files">
+    <ul id="file-list">
+    <%- dirs.each do |dir| -%>
+      <li>
+        <a href="/files/<%= dir.path %>">
+          <span><%= dir.basename %></span>
+        </a>
+        <div>
+
+        </div>
+      </li>
+    <%- end -%>
+    <% files.each do |file| %>
+      <li>
+        File:
+        <a href="/editor/<%= file.path %>"><%= file.basename %></a>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+</div>
 <footer>
 </footer>
