@@ -7,6 +7,7 @@ describe Lanyon::FileObject, fakefs: true do
     Dir.mkdir('/root/path')
 
     File.write('/root/path/file.md', "# Hello world!\n...")
+    File.write('/root/path/file2.md', 'CONTENT!')
   end
 
   let(:file) { Lanyon::FileObject.new('path/file.md', 'oval', '/root') }
@@ -110,6 +111,25 @@ describe Lanyon::FileObject, fakefs: true do
   describe '#eql?' do
     it 'compares object as a hash' do
       expect(file).to eql file.to_h
+    end
+  end
+
+  describe '#<=>' do
+    it 'includes ::Comparable' do
+      expect(Lanyon::FileObject.ancestors).to include ::Comparable
+    end
+
+    it 'considers directories greater than files' do
+      expect(file <=> dir).to be 1
+    end
+
+    it 'consider files less than directories' do
+      expect(dir <=> file).to be -1
+    end
+
+    it 'compares like types by their basepath name' do
+      file2 = Lanyon::FileObject.new('path/file2.md', 'oval', '/root')
+      expect(file <=> file2).to be -1
     end
   end
 end
