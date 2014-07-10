@@ -124,7 +124,7 @@ describe Lanyon::FileObject, fakefs: true do
     end
 
     it 'consider files less than directories' do
-      expect(dir <=> file).to be -1
+      expect(dir <=> file).to be(-1)
     end
 
     it 'compares like types by their basepath name' do

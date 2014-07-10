@@ -13,7 +13,7 @@ end
 require 'fileutils'
 require 'rugged'
 
-def fakegit(repo_dir, &block)
+def fakegit(repo_dir)
   source_repo = File.join(__dir__, 'testrepo')
   test_repo = repo_dir
 

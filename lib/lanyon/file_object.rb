@@ -56,10 +56,15 @@ class Lanyon::FileObject
     ::MultiJson.encode(to_h)
   end
 
-  def <=>(o)
-    return basename <=> o.basename if directory? && o.directory?
-    return -1 if directory? && o.file?
-    return 1 if file? && o.directory?
-    return basename <=> o.basename if file? && o.file?
+  def <=>(other)
+    unless self.is_a?(Lanyon::FileObject) && other.is_a?(Lanyon::FileObject)
+      return nil
+    end
+
+    if (directory? && other.directory?) || (file? && other.file?)
+      basename <=> other.basename
+    else
+      (directory? && other.file?) ? -1 : 1
+    end
   end
 end

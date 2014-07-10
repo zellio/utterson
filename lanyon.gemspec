@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Zachary Elliott']
   spec.email         = ['zach@nyu.edu']
 
-  spec.summary       = %q(Lanyon: Light CMS for Jekyll)
-  spec.description   = %q(Git backed CMS for Jekyll with a dynamic web editor.)
+  spec.summary       = 'Lanyon: Light CMS for Jekyll'
+  spec.description   = 'Git backed CMS for Jekyll with a dynamic web editor.'
 
   spec.homepage      = 'https://github.com/zellio/lanyon'
 
