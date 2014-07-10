@@ -1,30 +1,37 @@
 <%-
   dir = object
-  dirs = dir.content.select { |x| x.is_a?(Lanyon::Directory) }
-  files = dir.content.select { |x| x.is_a?(Lanyon::File) }
+  content = dir.content.sort
 -%>
 <header>
   <a href="..">up</a>
 </header>
 <div id="content">
   <div id="files">
-    <ul id="file-list">
-    <%- dirs.each do |dir| -%>
-      <li>
-        <a href="/files/<%= dir.path %>">
-          <span><%= dir.basename %></span>
+    <ul id="file-list" class="media-list">
+    <%- content.each do |file_object| -%>
+      <li class="media">
+        <%-
+          path =
+            if file_object.directory?
+              "/files/#{file_object.path}/"
+            elsif file_object.file?
+              "/editor/#{file_object.path}"
+            end
+        -%>
+        <a class="file-icon pull-left" href="<%= path %>">
+          <%- if file_object.directory? -%>
+          <span class="glyphicon glyphicon-folder-open"></span>
+          <%- elsif file_object.file? -%>
+          <span class="glyphicon glyphicon-file"></spam>
+          <%- end -%>
         </a>
-        <div>
-
+        <div class="media-body">
+          <h4 class="media-heading">
+            <%= file_object.basename %>
+          </h4>
         </div>
       </li>
     <%- end -%>
-    <% files.each do |file| %>
-      <li>
-        File:
-        <a href="/editor/<%= file.path %>"><%= file.basename %></a>
-      </li>
-    <% end %>
     </ul>
   </div>
 </div>

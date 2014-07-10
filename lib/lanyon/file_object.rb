@@ -1,4 +1,6 @@
 class Lanyon::FileObject
+  include ::Comparable
+
   attr_reader :path, :oid, :content, :repo_root
 
   def initialize(path, oid, repo_root = '', content = false)
@@ -52,5 +54,12 @@ class Lanyon::FileObject
 
   def to_json(*)
     ::MultiJson.encode(to_h)
+  end
+
+  def <=>(o)
+    return basename <=> o.basename if directory? && o.directory?
+    return -1 if directory? && o.file?
+    return 1 if file? && o.directory?
+    return basename <=> o.basename if file? && o.file?
   end
 end
