@@ -1,9 +1,24 @@
 <%-
+  require 'pathname'
+
   dir = object
   content = dir.content.sort
 -%>
 <header>
-  <a href="..">up</a>
+  <ol class="breadcrumb">
+    <%- path = '/files/' -%>
+    <li>
+      <a href="<%= path %>">
+        <span class="glyphicon glyphicon-home"></span>
+      </a>
+    </li>
+    <%- ::Pathname.new(dir.path).each_filename do |dir| -%>
+    <%- path = "#{path}#{dir}/" -%>
+    <li>
+      <a href="<%= path %>"><%= dir %></a>
+    </li>
+    <%- end -%>
+  </ol>
 </header>
 <div id="content">
   <div id="files">
