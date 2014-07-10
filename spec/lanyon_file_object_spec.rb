@@ -129,7 +129,7 @@ describe Lanyon::FileObject, fakefs: true do
 
     it 'compares like types by their basepath name' do
       file2 = Lanyon::FileObject.new('path/file2.md', 'oval', '/root')
-      expect(file <=> file2).to be -1
+      expect(file <=> file2).to eql file.basename <=> file2.basename
     end
   end
 end
