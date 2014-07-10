@@ -33,7 +33,7 @@
               "/editor/#{file_object.path}"
             end
         -%>
-        <a class="file-icon pull-left" href="<%= path %>">
+        <a class="pull-left icon btn" href="<%= path %>">
           <%- if file_object.directory? -%>
           <span class="glyphicon glyphicon-folder-open"></span>
           <%- elsif file_object.file? -%>
@@ -42,7 +42,7 @@
         </a>
         <div class="media-body">
           <h4 class="media-heading">
-            <%= file_object.basename %>
+            <a href="<%= path %>"><%= file_object.basename %></a>
           </h4>
         </div>
       </li>
