@@ -119,6 +119,10 @@ describe Lanyon::FileObject, fakefs: true do
       expect(Lanyon::FileObject.ancestors).to include ::Comparable
     end
 
+    it 'fails on disparate types' do
+      expect(file <=> Object.new).to be nil
+    end
+
     it 'considers directories greater than files' do
       expect(file <=> dir).to be 1
     end
