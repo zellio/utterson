@@ -21,6 +21,9 @@ $dark-gray: #526066;
     background-color: $gray;
 }
 
-.media {
-    border-bottom: 1px solid gray;
+.media.row {
+    .col-md-8 {
+        border-bottom: 1px solid $gray;
+        padding-bottom: 15px;
+    }
 }

@@ -10,7 +10,7 @@ body {
     width: 40px;
     height: 40px;
     line-height: 40px;
-    margin: 0;
+    margin: 0 15px;
     padding: 0;
     text-align: center;
     font-size: 20px;
@@ -21,7 +21,11 @@ body {
     margin-bottom: 0;
 }
 
+.media-body {
+    padding: 0 15px;
+}
+
 ul#file-list > li.media {
-    margin-top: 15px;
-    padding-bottom:15px;
+    /* margin-top: 15px; */
+    /* padding-bottom:15px; */
 }

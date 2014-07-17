@@ -4,8 +4,9 @@
   dir = object
   content = dir.content.sort
 -%>
-<header>
-  <ol class="breadcrumb">
+<header class="row">
+  <div class="col-md-2"></div>
+  <ol class="breadcrumb col-md-8">
     <%- path = '/files/' -%>
     <li>
       <a href="<%= path %>">
@@ -19,36 +20,44 @@
     </li>
     <%- end -%>
   </ol>
+  <div class="col-md-2"></div>
 </header>
-<div id="content">
-  <div id="files">
-    <ul id="file-list" class="media-list">
-    <%- content.each do |file_object| -%>
-      <li class="media">
-        <%-
-          path =
-            if file_object.directory?
-              "/files/#{file_object.path}/"
-            elsif file_object.file?
-              "/editor/#{file_object.path}"
-            end
-        -%>
-        <a class="pull-left icon btn" href="<%= path %>">
-          <%- if file_object.directory? -%>
-          <span class="glyphicon glyphicon-folder-open"></span>
-          <%- elsif file_object.file? -%>
-          <span class="glyphicon glyphicon-file"></spam>
-          <%- end -%>
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">
-            <a href="<%= path %>"><%= file_object.basename %></a>
-          </h4>
-        </div>
-      </li>
-    <%- end -%>
-    </ul>
+<ul id="file-list" class="media-list">
+  <%- content.each do |file_object| -%>
+  <%-
+     path =
+       if file_object.directory?
+         "/files/#{file_object.path}/"
+       elsif file_object.file?
+         "/editor/#{file_object.path}"
+       end
+  -%>
+  <li class="media row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <%- if file_object.directory? -%>
+      <a class="icon btn pull-left" href="<%= path %>">
+        <span class="glyphicon glyphicon-folder-open"></span>
+      </a>
+      <%- elsif file_object.file? -%>
+      <a class="icon btn pull-left" href="<%= path %>">
+        <span class="glyphicon glyphicon-file"></span>
+      </a>
+      <%- end -%>
+      <div class="media-body pull-left">
+        <h4 class="media-heading pull-left">
+          <a href="<%= path %>"><%= file_object.basename %></a>
+        </h4>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </li>
+  <%- end -%>
+</ul>
+<footer class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    here be footer
   </div>
-</div>
-<footer>
+  <div class="col-md-2"></div>
 </footer>
