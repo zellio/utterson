@@ -5,8 +5,7 @@
   content = dir.content.sort
 -%>
 <header class="row">
-  <div class="col-md-2"></div>
-  <ol class="breadcrumb col-md-8">
+  <ol class="breadcrumb col-md-8 col-md-offset-2">
     <%- path = '/files/' -%>
     <li>
       <a href="<%= path %>">
@@ -20,7 +19,6 @@
     </li>
     <%- end -%>
   </ol>
-  <div class="col-md-2"></div>
 </header>
 <ul id="file-list" class="media-list">
   <%- content.each do |file_object| -%>
@@ -33,8 +31,7 @@
        end
   -%>
   <li class="media row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+    <div class="col-md-8 col-md-offset-2">
       <%- if file_object.directory? -%>
       <a class="icon btn pull-left" href="<%= path %>">
         <span class="glyphicon glyphicon-folder-open"></span>
@@ -50,14 +47,11 @@
         </h4>
       </div>
     </div>
-    <div class="col-md-2"></div>
   </li>
   <%- end -%>
 </ul>
 <footer class="row">
-  <div class="col-md-2"></div>
-  <div class="col-md-8">
+  <div class="col-md-8 col-md-offset-2">
     here be footer
   </div>
-  <div class="col-md-2"></div>
 </footer>

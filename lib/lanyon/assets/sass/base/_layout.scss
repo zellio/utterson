@@ -25,7 +25,15 @@ body {
     padding: 0 15px;
 }
 
-ul#file-list > li.media {
-    /* margin-top: 15px; */
-    /* padding-bottom:15px; */
+.media.row {
+    .col-md-8 {
+        padding-bottom: 15px;
+    }
+}
+
+#editor-display {
+    min-height: 300px;
+    padding: 0px;
+    border: 0px;
+    resize: none;
 }

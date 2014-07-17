@@ -24,6 +24,9 @@ $dark-gray: #526066;
 .media.row {
     .col-md-8 {
         border-bottom: 1px solid $gray;
-        padding-bottom: 15px;
     }
+}
+
+#editor-display:focus {
+    outline:0px none transparent;
 }

@@ -1,9 +1,15 @@
 <%- file = object -%>
-<a href="<%= request.path.sub('editor','files') %>/..">up</a>
-<h1><%= file.basename %></h1>
-<textarea id="container">
-</textarea>
+
+<header class="row">
+  <!-- <a href="<%= request.path.sub('editor','files') %>/..">up</a> -->
+  <h1 class="col-md-8 col-md-offset-2"><%= file.basename %></h1>
+</header>
+<div id="editor" class="row">
+  <textarea id="editor-display" class="col-md-8 col-md-offset-2"></textarea>
+</div>
+<footer class="row">
+</footer>
 <script type="application/javascript">
 $.ajax({ dataType: "json", url: '<%= request.path %>',
-  success: function(data) { $('#container').text(data.content); } });
+  success: function(data) { $('#editor-display').text(data.content); }});
 </script>
