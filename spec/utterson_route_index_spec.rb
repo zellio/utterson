@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Lanyon::Route::Index, rackup: true do
+describe Utterson::Route::Index, rackup: true do
 
   # describe 'POST' do
   #   it

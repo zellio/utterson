@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Lanyon::FileObject, fakefs: true do
+describe Utterson::FileObject, fakefs: true do
 
   before(:each) do
     Dir.mkdir('/root')
@@ -10,11 +10,11 @@ describe Lanyon::FileObject, fakefs: true do
     File.write('/root/path/file2.md', 'CONTENT!')
   end
 
-  let(:file) { Lanyon::FileObject.new('path/file.md', 'oval', '/root') }
-  let(:dir)  { Lanyon::FileObject.new('path', 'oval', '/root') }
+  let(:file) { Utterson::FileObject.new('path/file.md', 'oval', '/root') }
+  let(:dir)  { Utterson::FileObject.new('path', 'oval', '/root') }
 
   let(:file_with_content) do
-    Lanyon::FileObject.new('path/file.md', 'oval', '/root', true)
+    Utterson::FileObject.new('path/file.md', 'oval', '/root', true)
   end
 
   describe '#system_path' do
@@ -41,7 +41,7 @@ describe Lanyon::FileObject, fakefs: true do
     end
 
     it 'is false if the file does not exist' do
-      bad_file = Lanyon::FileObject.new('bad', 'oval', '/root')
+      bad_file = Utterson::FileObject.new('bad', 'oval', '/root')
       expect(bad_file.exists?).to be false
     end
   end
@@ -116,7 +116,7 @@ describe Lanyon::FileObject, fakefs: true do
 
   describe '#<=>' do
     it 'includes ::Comparable' do
-      expect(Lanyon::FileObject.ancestors).to include ::Comparable
+      expect(Utterson::FileObject.ancestors).to include ::Comparable
     end
 
     it 'fails on disparate types' do
@@ -132,7 +132,7 @@ describe Lanyon::FileObject, fakefs: true do
     end
 
     it 'compares like types by their basepath name' do
-      file2 = Lanyon::FileObject.new('path/file2.md', 'oval', '/root')
+      file2 = Utterson::FileObject.new('path/file2.md', 'oval', '/root')
       expect(file <=> file2).to eql file.basename <=> file2.basename
     end
   end

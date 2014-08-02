@@ -1,10 +1,10 @@
 require 'fileutils'
 require 'rugged'
 
-class Lanyon::RepositoryManager
+class Utterson::RepositoryManager
   attr_reader :repo
 
-  def initialize(path, email = 'lanyon@localhost', name = 'Dr. Lanyon')
+  def initialize(path, email = 'utterson@localhost', name = 'Dr. Utterson')
     @path = path
     @email = email
     @name = name
@@ -29,19 +29,19 @@ class Lanyon::RepositoryManager
   end
   private :object_data
 
-  def hash_to_lanyon_class(hash)
+  def hash_to_utterson_class(hash)
     case hash[:type]
     when :blob
-      Lanyon::File.new(hash[:name], hash[:oid], @repo.workdir, true)
+      Utterson::File.new(hash[:name], hash[:oid], @repo.workdir, true)
     when :tree
-      Lanyon::Directory.new(hash[:name], hash[:oid], @repo, false)
+      Utterson::Directory.new(hash[:name], hash[:oid], @repo, false)
     end
   end
-  private :hash_to_lanyon_class
+  private :hash_to_utterson_class
 
   def get(path)
     data = object_data(path)
-    hash_to_lanyon_class(data)
+    hash_to_utterson_class(data)
   rescue
     nil
   end

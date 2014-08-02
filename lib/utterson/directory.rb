@@ -1,4 +1,4 @@
-class Lanyon::Directory < Lanyon::FileObject
+class Utterson::Directory < Utterson::FileObject
   def initialize(path, oid, repository, content = false)
     super(path, oid, repository.workdir, content)
     @repo = repository
@@ -10,21 +10,21 @@ class Lanyon::Directory < Lanyon::FileObject
   end
   private :root_tree
 
-  def hash_to_lanyon_class(hash)
+  def hash_to_utterson_class(hash)
     case hash[:type]
     when :blob
-      Lanyon::File.new(hash[:path], hash[:oid], @repo.workdir, true)
+      Utterson::File.new(hash[:path], hash[:oid], @repo.workdir, true)
     when :tree
-      Lanyon::Directory.new(hash[:path], hash[:oid], @repo, false)
+      Utterson::Directory.new(hash[:path], hash[:oid], @repo, false)
     end
   end
-  private :hash_to_lanyon_class
+  private :hash_to_utterson_class
 
   def read
     tree = @path.empty? ? root_tree : @repo.lookup(oid)
     @content = tree.map do |hash|
       hash[:path] = (@path == '') ? hash[:name] : File.join(@path, hash[:name])
-      hash_to_lanyon_class(hash)
+      hash_to_utterson_class(hash)
     end.compact
   end
 

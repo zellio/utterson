@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Lanyon::Application do
+describe Utterson::Application do
 
-  let(:app) { Lanyon::Application.new }
+  let(:app) { Utterson::Application.new }
 
   it 'loads views from "templates"' do
     expect(File.basename(app.settings.views)).to eql 'templates'

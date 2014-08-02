@@ -1,10 +1,10 @@
-module Lanyon::Route::Files
+module Utterson::Route::Files
   def self.register_post(app)
     # CREATE
     app.post '/files/?' do
       path = request.params['path']
 
-      file = Lanyon::File.new(path, '', app.repo_manager.repo.workdir)
+      file = Utterson::File.new(path, '', app.repo_manager.repo.workdir)
 
       halt 405 if file.exists?
 

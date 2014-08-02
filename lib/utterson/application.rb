@@ -6,12 +6,12 @@ require 'rack/coffee'
 require 'rack/parser'
 require 'sass/plugin/rack'
 
-class Lanyon::Application < Sinatra::Base
+class Utterson::Application < Sinatra::Base
   set :project_root, -> { File.join(__dir__, '..', '..') }
   set :root, -> { __dir__ }
   set :views, -> { File.join(root, 'templates') }
   set :public_folder, -> { File.join(root, 'assets') }
-  set :repo_manager, -> { Lanyon::RepositoryManager.new(repo_dir) }
+  set :repo_manager, -> { Utterson::RepositoryManager.new(repo_dir) }
 
   register Sinatra::ConfigFile
   config_file ['config.yml', File.join(project_root, 'config.yml')]
@@ -35,5 +35,5 @@ class Lanyon::Application < Sinatra::Base
 
   register Sinatra::RespondWith
 
-  register Lanyon::Routes
+  register Utterson::Routes
 end

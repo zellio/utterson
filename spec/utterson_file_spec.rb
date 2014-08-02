@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Lanyon::File, fakefs: true do
+describe Utterson::File, fakefs: true do
 
   before(:each) do
     Dir.mkdir('/root')
@@ -9,9 +9,9 @@ describe Lanyon::File, fakefs: true do
     File.write('/root/path/file.md', "# Hello World!\n...")
   end
 
-  let(:file) { Lanyon::File.new('path/file.md', 'oid_val', '/root') }
+  let(:file) { Utterson::File.new('path/file.md', 'oid_val', '/root') }
   let(:file_with_content) do
-    Lanyon::File.new('path/file.md', 'oid_val', '/root', true)
+    Utterson::File.new('path/file.md', 'oid_val', '/root', true)
   end
 
   describe '#initialize' do
@@ -27,7 +27,7 @@ describe Lanyon::File, fakefs: true do
     end
 
     it 'does nothing if the file isn\'t there' do
-      file = Lanyon::File.new('bad/path', 'oid', '/')
+      file = Utterson::File.new('bad/path', 'oid', '/')
       expect(file.read).to be_nil
     end
   end

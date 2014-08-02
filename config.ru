@@ -1,3 +1,3 @@
-require 'lanyon'
+require 'utterson'
 
-run Lanyon::Application
+run Utterson::Application

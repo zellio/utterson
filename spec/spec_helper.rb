@@ -2,7 +2,7 @@ require 'simplecov'
 SimpleCov.start
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'lanyon'
+require 'utterson'
 
 require 'fakefs/spec_helpers'
 
@@ -32,7 +32,7 @@ require 'rack/test'
 
 module Rack::Test::Methods
   def app
-    Lanyon::Application
+    Utterson::Application
   end
 end
 

@@ -1,4 +1,4 @@
-module Lanyon
+module Utterson
   module Route; end
 
   module Routes
@@ -8,7 +8,7 @@ module Lanyon
 
     def self.registered(app)
       Route.constants.each do |const|
-        nodule = Lanyon::Route.const_get const
+        nodule = Utterson::Route.const_get const
         app.register(nodule) if nodule.class == Module
       end
     end

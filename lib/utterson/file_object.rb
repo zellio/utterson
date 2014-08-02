@@ -1,4 +1,4 @@
-class Lanyon::FileObject
+class Utterson::FileObject
   include ::Comparable
 
   attr_reader :path, :oid, :content, :repo_root
@@ -57,7 +57,7 @@ class Lanyon::FileObject
   end
 
   def <=>(other)
-    unless self.is_a?(Lanyon::FileObject) && other.is_a?(Lanyon::FileObject)
+    unless self.is_a?(Utterson::FileObject) && other.is_a?(Utterson::FileObject)
       return nil
     end
 

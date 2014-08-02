@@ -1,19 +1,19 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'lanyon/version'
+require 'utterson/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'lanyon'
-  spec.version       = Lanyon::VERSION
+  spec.name          = 'utterson'
+  spec.version       = Utterson::VERSION
 
   spec.authors       = ['Zachary Elliott']
   spec.email         = ['zach@nyu.edu']
 
-  spec.summary       = 'Lanyon: Light CMS for Jekyll'
+  spec.summary       = 'Utterson: Light CMS for Jekyll'
   spec.description   = 'Git backed CMS for Jekyll with a dynamic web editor.'
 
-  spec.homepage      = 'https://github.com/zellio/lanyon'
+  spec.homepage      = 'https://github.com/zellio/utterson'
 
   spec.license       = 'MIT'
 

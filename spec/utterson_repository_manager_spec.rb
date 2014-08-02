@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Lanyon::RepositoryManager  do
+describe Utterson::RepositoryManager  do
 
   let(:repo_dir) { File.join(__dir__, "spec_repo.#{Time.now.to_i}") }
-  let(:repo_manager) { Lanyon::RepositoryManager.new(repo_dir) }
+  let(:repo_manager) { Utterson::RepositoryManager.new(repo_dir) }
 
   let(:foid) { '9eec82ced116713a102a04307e7e18d2509f8698' }
   let(:doid) { '591c274b49158e1a7dfcc962c190e3f347ee37dd' }
@@ -12,11 +12,11 @@ describe Lanyon::RepositoryManager  do
 
   describe '#author' do
     it 'contains the commiter\'s email' do
-      expect(repo_manager.author[:email]).to eql 'lanyon@localhost'
+      expect(repo_manager.author[:email]).to eql 'utterson@localhost'
     end
 
     it 'contains the commiter\'s name' do
-      expect(repo_manager.author[:name]).to eql 'Dr. Lanyon'
+      expect(repo_manager.author[:name]).to eql 'Dr. Utterson'
     end
 
     it 'contains the current time' do
@@ -29,12 +29,12 @@ describe Lanyon::RepositoryManager  do
     let(:lfile) { repo_manager.file('README.md') }
     let(:ldir) { repo_manager.directory('src') }
 
-    it 'Returns Lanyon::File' do
-      expect(lfile).to be_a Lanyon::File
+    it 'Returns Utterson::File' do
+      expect(lfile).to be_a Utterson::File
     end
 
-    it 'Returns Lanyon::Directory' do
-      expect(ldir).to be_a Lanyon::Directory
+    it 'Returns Utterson::Directory' do
+      expect(ldir).to be_a Utterson::Directory
     end
 
     it 'Looks up stuff by name' do
@@ -51,7 +51,7 @@ describe Lanyon::RepositoryManager  do
   describe '#add' do
     let(:path) { 'file.txt' }
     let(:full_path) { ::File.join(repo_dir, path) }
-    let(:file) { Lanyon::File.new(path, nil, repo_dir) }
+    let(:file) { Utterson::File.new(path, nil, repo_dir) }
     let(:content) { 'Hello world!' }
 
     before(:each) { @commit = repo_manager.add(file, content) }
@@ -69,8 +69,8 @@ describe Lanyon::RepositoryManager  do
   describe '#update' do
     let(:path) { 'README.md' }
     let(:full_path) { ::File.join(repo_dir, path) }
-    let(:file) { Lanyon::File.new(path, '', repo_dir) }
-    let(:bad_file) { Lanyon::File.new('bad_path', '', repo_dir) }
+    let(:file) { Utterson::File.new(path, '', repo_dir) }
+    let(:bad_file) { Utterson::File.new('bad_path', '', repo_dir) }
 
     let(:content) { 'Hello world!' }
 
@@ -92,7 +92,7 @@ describe Lanyon::RepositoryManager  do
   describe '#move' do
     let(:path) { 'README.md' }
     let(:full_path) { ::File.join(repo_dir, path) }
-    let(:file) { Lanyon::File.new(path, '', repo_dir) }
+    let(:file) { Utterson::File.new(path, '', repo_dir) }
 
     let(:target) { 'readme.mdown' }
     let(:full_target) { ::File.join(repo_dir, target) }
@@ -118,7 +118,7 @@ describe Lanyon::RepositoryManager  do
   describe '#delete' do
     let(:path) { 'README.md' }
     let(:full_path) { ::File.join(repo_dir, path) }
-    let(:file) { Lanyon::File.new(path, foid, repo_dir) }
+    let(:file) { Utterson::File.new(path, foid, repo_dir) }
 
     before(:each) do
       @commit = repo_manager.delete(file)

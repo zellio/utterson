@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Lanyon::Route::Files, rackup: true do
+describe Utterson::Route::Files, rackup: true do
 
   let(:repo_dir) { File.join(__dir__, "spec_repo.#{Time.now.to_i}") }
 
@@ -9,7 +9,7 @@ describe Lanyon::Route::Files, rackup: true do
 
   around(:each) do |example|
     fakegit(repo_dir) do
-      app.repo_manager = Lanyon::RepositoryManager.new(repo_dir)
+      app.repo_manager = Utterson::RepositoryManager.new(repo_dir)
       example.call
     end
   end
