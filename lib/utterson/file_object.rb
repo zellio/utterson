@@ -1,5 +1,6 @@
 class Utterson::FileObject
   include ::Comparable
+  include Utterson::Conversion
 
   attr_reader :path, :oid, :content, :repo_root
 

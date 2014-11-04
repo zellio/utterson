@@ -10,20 +10,10 @@ class Utterson::Directory < Utterson::FileObject
   end
   private :root_tree
 
-  def hash_to_utterson_class(hash)
-    case hash[:type]
-    when :blob
-      Utterson::File.new(hash[:path], hash[:oid], @repo.workdir, true)
-    when :tree
-      Utterson::Directory.new(hash[:path], hash[:oid], @repo, false)
-    end
-  end
-  private :hash_to_utterson_class
-
   def read
     tree = @path.empty? ? root_tree : @repo.lookup(oid)
     @content = tree.map do |hash|
-      hash[:path] = (@path == '') ? hash[:name] : File.join(@path, hash[:name])
+      hash[:name] = (@path == '') ? hash[:name] : File.join(@path, hash[:name])
       hash_to_utterson_class(hash)
     end.compact
   end

@@ -2,7 +2,7 @@ require 'fileutils'
 require 'rugged'
 
 class Utterson::RepositoryManager
-  attr_reader :repo
+  include Utterson::Conversion
 
   def initialize(path, email = 'utterson@localhost', name = 'Dr. Utterson')
     @path = path
@@ -28,16 +28,6 @@ class Utterson::RepositoryManager
     end
   end
   private :object_data
-
-  def hash_to_utterson_class(hash)
-    case hash[:type]
-    when :blob
-      Utterson::File.new(hash[:name], hash[:oid], @repo.workdir, true)
-    when :tree
-      Utterson::Directory.new(hash[:name], hash[:oid], @repo, false)
-    end
-  end
-  private :hash_to_utterson_class
 
   def get(path)
     data = object_data(path)
