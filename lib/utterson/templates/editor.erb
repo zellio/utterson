@@ -5,11 +5,35 @@
   <h1 class="col-md-8 col-md-offset-2"><%= file.basename %></h1>
 </header>
 <div id="editor" class="row">
-  <textarea id="editor-display" class="col-md-8 col-md-offset-2"></textarea>
+  <div id="epiceditor"></div>
+  <!-- textarea id="editor-display" class="col-md-8 col-md-offset-2"></textarea -->
 </div>
 <footer class="row">
 </footer>
 <script type="application/javascript">
-$.ajax({ dataType: "json", url: '<%= request.path %>',
-  success: function(data) { $('#editor-display').text(data.content); }});
+$.ajax({
+    dataType: "json",
+    url: '<%= request.path %>',
+    success: function(data) {
+        var opts = {
+            file: {
+                name: data.path,
+                defaultContent: data.content,
+                auotSave: 100
+            },
+            theme: {
+                base: 'http://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/base/epiceditor.css',
+                editor: 'http://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/editor/epic-light.css',
+                preview: 'http://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/preview/github.css'
+            },
+            autogrow: true,
+            button: {
+                preview: true,
+                fullscreen: true,
+                bar: true
+            }
+        },
+            editor = new EpicEditor(opts).load();
+    }
+});
 </script>
